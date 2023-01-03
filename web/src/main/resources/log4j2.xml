@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+  <Appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout
+        pattern="%d{dd-MM-yyyy HH:mm} %highlight{[%level]}{FATAL=bright red, ERROR=red, WARN=bright yellow, DEBUG=yellow, INFO=green, TRACE=Cyan} [%t] %logger{1} - %msg%n"
+        disableAnsi="false"/>
+    </Console>
+  </Appenders>
+  <Loggers>
+    <Root level="error">
+      <AppenderRef ref="Console"/>
+    </Root>
+    <Logger name="org.springframework" level="debug">
+    </Logger>
+    <Logger name="com.epam.esm" level="debug">
+    </Logger>
+  </Loggers>
+
+</Configuration>
