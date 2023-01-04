@@ -17,7 +17,7 @@ public interface Specification<T> extends Serializable {
     return (root, query, builder) -> null;
   }
 
-  static <T> Specification<T> where(@Nullable Specification<T> spec) {
+  static <T> Specification<T> emptySpecificationOnNull(@Nullable Specification<T> spec) {
     return spec == null //
         ? emptySpecification() //
         : spec;
