@@ -15,6 +15,8 @@ import lombok.Value;
 @Value
 public class Sort {
 
+  private static final Sort UNSORTED = new Sort(List.of());
+
   List<Order> order;
 
   public boolean isEmpty() {
@@ -27,6 +29,10 @@ public class Sort {
 
   public boolean isUnsorted() {
     return !this.isSorted();
+  }
+
+  public static Sort unsorted() {
+    return UNSORTED;
   }
 
   public Stream<Order> stream(){
