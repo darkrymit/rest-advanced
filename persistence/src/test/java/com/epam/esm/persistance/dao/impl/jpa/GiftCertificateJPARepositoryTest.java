@@ -1,40 +1,39 @@
-package com.epam.esm.persistance.dao.impl.jdbc;
+package com.epam.esm.persistance.dao.impl.jpa;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.epam.esm.persistance.config.EmbeddedJdbcConfig;
+import com.epam.esm.persistance.config.EmbeddedDatabaseJpaConfig;
 import com.epam.esm.persistance.dao.GiftCertificateSearchParameters;
 import com.epam.esm.persistance.entity.GiftCertificate;
 import com.epam.esm.persistance.entity.Tag;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {EmbeddedJdbcConfig.class})
+@ContextConfiguration(classes = {EmbeddedDatabaseJpaConfig.class})
 @ActiveProfiles("integration-test")
 @Transactional
-class GiftCertificateJdbcRepositoryTest {
+class GiftCertificateJPARepositoryTest {
+  @PersistenceContext
+  EntityManager entityManager;
 
-  @Autowired
-  JdbcTemplate jdbcTemplate;
-
-  GiftCertificateJdbcRepository giftCertificateJdbcRepository;
+  GiftCertificateJPARepository giftCertificateJPARepository;
 
   @BeforeEach
   void setUp() {
-    giftCertificateJdbcRepository = new GiftCertificateJdbcRepository(jdbcTemplate);
+    giftCertificateJPARepository = new GiftCertificateJPARepository(entityManager);
   }
 
   @Test
@@ -42,70 +41,70 @@ class GiftCertificateJdbcRepositoryTest {
     GiftCertificate certificate = new GiftCertificate(null, "test", "testing", BigDecimal.TEN, 405,
         ZonedDateTime.now(), ZonedDateTime.now(), List.of(new Tag(1L, null)));
 
-    GiftCertificate savedCertificate = giftCertificateJdbcRepository.save(certificate);
+    GiftCertificate savedCertificate = giftCertificateJPARepository.save(certificate);
 
-    assertTrue(giftCertificateJdbcRepository.findById(savedCertificate.getId()).isPresent());
+    assertTrue(giftCertificateJPARepository.findById(savedCertificate.getId()).isPresent());
   }
 
   @Test
   void saveShouldUpdateEntryWithNewDescriptionWhenEntryExist() {
     String targetDescription = "Regular test ...";
-    GiftCertificate certificate = giftCertificateJdbcRepository.findById(1L).orElseThrow();
+    GiftCertificate certificate = giftCertificateJPARepository.findById(1L).orElseThrow();
 
     certificate.setDescription(targetDescription);
 
-    giftCertificateJdbcRepository.save(certificate);
+    giftCertificateJPARepository.save(certificate);
 
     assertEquals(targetDescription,
-        giftCertificateJdbcRepository.findById(1L).orElseThrow().getDescription());
+        giftCertificateJPARepository.findById(1L).orElseThrow().getDescription());
   }
 
   @Test
   void findByIdShouldReturnPresentOptionalWhenByExistId() {
-    assertTrue(giftCertificateJdbcRepository.findById(1L).isPresent());
+    assertTrue(giftCertificateJPARepository.findById(1L).isPresent());
   }
 
   @Test
   void findByIdShouldReturnEmptyOptionalWhenByNonExistId() {
-    assertTrue(giftCertificateJdbcRepository.findById(-404L).isEmpty());
+    assertTrue(giftCertificateJPARepository.findById(-404L).isEmpty());
   }
 
   @Test
   void existsByIdShouldReturnTrueWhenByExistId() {
-    assertTrue(giftCertificateJdbcRepository.existsById(1L));
+    assertTrue(giftCertificateJPARepository.existsById(1L));
   }
 
   @Test
   void existsByIdShouldReturnFalseWhenByNonExistId() {
-    assertFalse(giftCertificateJdbcRepository.existsById(-404L));
+    assertFalse(giftCertificateJPARepository.existsById(-404L));
   }
 
   @Test
   void findAllAsListShouldReturnNonEmptyListWhenCertificatesEntryExists() {
-    assertFalse(giftCertificateJdbcRepository.findAllAsList().isEmpty());
+    assertFalse(giftCertificateJPARepository.findAllAsList().isEmpty());
   }
 
   @Test
   void findAllAsListShouldReturnNonEmptyListWhenCertificatesByParametersExists() {
     GiftCertificateSearchParameters searchParameters = new GiftCertificateSearchParameters("tagName3","gift",null);
-    assertFalse(giftCertificateJdbcRepository.findAllAsList(searchParameters).isEmpty());
+    assertFalse(giftCertificateJPARepository.findAllAsList(searchParameters).isEmpty());
   }
 
   @Test
   void deleteShouldDeleteEntryWhenEntryExists() {
-    GiftCertificate giftCertificate = giftCertificateJdbcRepository.findById(1L).orElseThrow();
+    GiftCertificate giftCertificate = giftCertificateJPARepository.findById(1L).orElseThrow();
 
-    giftCertificateJdbcRepository.delete(giftCertificate);
+    giftCertificateJPARepository.delete(giftCertificate);
 
-    assertFalse(giftCertificateJdbcRepository.existsById(1L));
+    assertFalse(giftCertificateJPARepository.existsById(1L));
   }
 
   @Test
   void deleteShouldNotDeleteAllEntryWhenEntryExists() {
-    GiftCertificate giftCertificate = giftCertificateJdbcRepository.findById(1L).orElseThrow();
+    GiftCertificate giftCertificate = giftCertificateJPARepository.findById(1L).orElseThrow();
 
-    giftCertificateJdbcRepository.delete(giftCertificate);
+    giftCertificateJPARepository.delete(giftCertificate);
 
-    assertFalse(giftCertificateJdbcRepository.findAllAsList().isEmpty());
+    assertFalse(giftCertificateJPARepository.findAllAsList().isEmpty());
   }
 }
