@@ -1,6 +1,7 @@
 package com.epam.esm.persistance.dao;
 
 import java.util.List;
+import java.util.stream.Stream;
 import lombok.Value;
 
 
@@ -16,8 +17,20 @@ public class Sort {
 
   List<Order> order;
 
-  boolean isEmpty() {
+  public boolean isEmpty() {
     return order.isEmpty();
+  }
+
+  public boolean isSorted() {
+    return !this.isEmpty();
+  }
+
+  public boolean isUnsorted() {
+    return !this.isSorted();
+  }
+
+  public Stream<Order> stream(){
+    return order.stream();
   }
 
   /**
