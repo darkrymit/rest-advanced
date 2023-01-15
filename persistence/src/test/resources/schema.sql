@@ -1,6 +1,22 @@
+DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS certificates_has_tags;
 DROP TABLE IF EXISTS tags;
 DROP TABLE IF EXISTS certificates;
+
+CREATE TABLE users
+(
+    id               bigint         NOT NULL AUTO_INCREMENT,
+    email          varchar(64)    NOT NULL,
+    `password`          varchar(64)    NOT NULL,
+    firstName          varchar(20)    NOT NULL,
+    lastName          varchar(20)    NOT NULL,
+    creation_date      datetime(6)    NOT NULL,
+    last_modified_by varchar(60)    NOT NULL,
+    last_modified_date datetime(6)    NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE (email),
+    UNIQUE (id)
+);
 
 CREATE TABLE certificates
 (

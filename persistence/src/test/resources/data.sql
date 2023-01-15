@@ -9,13 +9,25 @@ VALUES ('tagName4');
 INSERT INTO tags (`name`)
 VALUES ('tagName2');
 
+INSERT INTO users (email, `password`, firstName, lastName, creation_date,
+                   last_modified_by, last_modified_date)
+VALUES ('test@gmail.com', 'passwordhash', 'Tester', 'Test', '2020-08-29T06:12:15.156',
+        'test@gmail.com', '2020-08-29T06:12:15.156');
+INSERT INTO users (email, `password`, firstName, lastName, creation_date,
+                   last_modified_by, last_modified_date)
+VALUES ('test2@gmail.com', 'passwordhash', 'Tester2', 'Test2', '2019-08-29T06:12:15.156',
+        'test2@gmail.com', '2019-08-29T06:12:15.156');
+
 
 INSERT INTO certificates (`name`, description, price, duration, create_date, last_update_date)
-VALUES ('giftCertificate1', 'description1', 10.1, 1, '2020-08-29T06:12:15.156', '2020-08-29T06:12:15.156');
+VALUES ('giftCertificate1', 'description1', 10.1, 1, '2020-08-29T06:12:15.156',
+        '2020-08-29T06:12:15.156');
 INSERT INTO certificates (`name`, description, price, duration, create_date, last_update_date)
-VALUES ('giftCertificate3', 'description3', 30.3, 3, '2019-08-29T06:12:15.156', '2019-08-29T06:12:15.156');
+VALUES ('giftCertificate3', 'description3', 30.3, 3, '2019-08-29T06:12:15.156',
+        '2019-08-29T06:12:15.156');
 INSERT INTO certificates (`name`, description, price, duration, create_date, last_update_date)
-VALUES ('giftCertificate2', 'description2', 20.2, 2, '2018-08-29T06:12:15.156', '2018-08-29T06:12:15.156');
+VALUES ('giftCertificate2', 'description2', 20.2, 2, '2018-08-29T06:12:15.156',
+        '2018-08-29T06:12:15.156');
 
 INSERT INTO certificates_has_tags (certificates_id, tags_id)
 VALUES (1, 2);

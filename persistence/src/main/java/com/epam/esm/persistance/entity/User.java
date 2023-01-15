@@ -41,13 +41,13 @@ public class User {
   @Column(nullable = false, length = 20)
   private String lastName;
 
-  @Column
+  @Column(name = "creation_date")
   private Instant creationDate;
 
-  @Column
+  @Column(name = "last_modified_by")
   private String lastModifiedBy;
 
-  @Column
+  @Column(name = "last_modified_date")
   private Instant lastModifiedDate;
 
   @Override
