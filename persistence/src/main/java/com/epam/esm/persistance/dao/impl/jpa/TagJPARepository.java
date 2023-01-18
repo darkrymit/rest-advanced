@@ -2,6 +2,7 @@ package com.epam.esm.persistance.dao.impl.jpa;
 
 import com.epam.esm.persistance.dao.TagRepository;
 import com.epam.esm.persistance.entity.Tag;
+import com.epam.esm.persistance.entity.Tag_;
 import java.util.Optional;
 import javax.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,6 @@ public class TagJPARepository extends SimpleJpaRepository<Tag,Long> implements T
 
   @Override
   public Optional<Tag> findByName(String name) {
-    return findOne((root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("name"), name));
+    return findOne((root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(Tag_.name), name));
   }
 }
