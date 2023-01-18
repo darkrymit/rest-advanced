@@ -58,11 +58,17 @@ class UserJPARepositoryTest {
   @Test
   void findByIdShouldReturnPresentOptionalWhenByExistId() {
     assertTrue(userJpaRepository.findById(1L).isPresent());
-  }
 
+  }
   @Test
   void findByIdShouldReturnEmptyOptionalWhenByNonExistId() {
     assertTrue(userJpaRepository.findById(-404L).isEmpty());
+  }
+
+  @Test
+  void findByEmailShouldReturnPresentOptionalWhenByExistEmail() {
+    assertTrue(userJpaRepository.findByEmail("test@gmail.com").isPresent());
+
   }
 
   @Test
