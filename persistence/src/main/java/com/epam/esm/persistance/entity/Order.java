@@ -2,6 +2,7 @@ package com.epam.esm.persistance.entity;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
@@ -11,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ import lombok.ToString;
 import org.hibernate.Hibernate;
 
 @Entity
+@Table(name = "orders")
 @Getter
 @Setter
 @ToString
@@ -36,17 +39,17 @@ public class Order {
   @Column(precision=19, scale=4)
   private BigDecimal totalPrice;
 
-  @OneToMany(mappedBy = "order")
+  @OneToMany(mappedBy = "order", orphanRemoval = true)
   @ToString.Exclude
-  private Set<OrderItem> items;
+  private Set<OrderItem> items  = new HashSet<>();
 
-  @Column(nullable = false)
+  @Column(nullable = false,name = "creation_date")
   private Instant creationDate;
 
-  @Column(nullable = false , length = 20)
+  @Column(nullable = false , length = 20,name = "last_modified_by")
   private String lastModifiedBy;
 
-  @Column
+  @Column(name = "last_modified_date")
   private Instant lastModifiedDate;
 
   @Override

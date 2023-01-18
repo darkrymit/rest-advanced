@@ -18,6 +18,15 @@ INSERT INTO users (email, `password`, firstName, lastName, creation_date,
 VALUES ('test2@gmail.com', 'passwordhash', 'Tester2', 'Test2', '2019-08-29T06:12:15.156',
         'test2@gmail.com', '2019-08-29T06:12:15.156');
 
+INSERT INTO orders (owner_id, totalPrice, creation_date, last_modified_by, last_modified_date)
+VALUES (1, 200.0, '2020-09-29T06:12:15.156', 'test@gmail.com', '2020-09-29T06:12:15.156');
+INSERT INTO orders (owner_id, totalPrice, creation_date, last_modified_by, last_modified_date)
+VALUES (1, 180.0, '2020-10-29T06:12:15.156', 'test@gmail.com', '2020-10-29T06:12:15.156');
+
+INSERT INTO order_items (order_id, gift_certificate_id, price)
+VALUES (1, 1,200.0);
+INSERT INTO order_items (order_id, gift_certificate_id, price)
+VALUES (2, 1,180.0);
 
 INSERT INTO certificates (`name`, description, price, duration, create_date, last_update_date)
 VALUES ('giftCertificate1', 'description1', 10.1, 1, '2020-08-29T06:12:15.156',

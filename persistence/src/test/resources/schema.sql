@@ -5,23 +5,44 @@ DROP TABLE IF EXISTS certificates;
 
 CREATE TABLE users
 (
-    id               bigint         NOT NULL AUTO_INCREMENT,
-    email          varchar(64)    NOT NULL,
-    `password`          varchar(64)    NOT NULL,
-    firstName          varchar(20)    NOT NULL,
-    lastName          varchar(20)    NOT NULL,
-    creation_date      datetime(6)    NOT NULL,
-    last_modified_by varchar(60)    NOT NULL,
-    last_modified_date datetime(6)    NOT NULL,
+    id                 bigint      NOT NULL AUTO_INCREMENT,
+    email              varchar(64) NOT NULL,
+    `password`         varchar(64) NOT NULL,
+    firstName          varchar(20) NOT NULL,
+    lastName           varchar(20) NOT NULL,
+    creation_date      datetime(6) NOT NULL,
+    last_modified_by   varchar(60) NOT NULL,
+    last_modified_date datetime(6) NOT NULL,
     PRIMARY KEY (id),
     UNIQUE (email),
+    UNIQUE (id)
+);
+
+CREATE TABLE orders
+(
+    id                 bigint         NOT NULL AUTO_INCREMENT,
+    owner_id           bigint         NOT NULL,
+    totalPrice         decimal(19, 4) NOT NULL,
+    creation_date      datetime(6)    NOT NULL,
+    last_modified_by   varchar(60)    NOT NULL,
+    last_modified_date datetime(6)    NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE (id)
+);
+CREATE TABLE order_items
+(
+    id                  bigint         NOT NULL AUTO_INCREMENT,
+    order_id            bigint         NOT NULL,
+    gift_certificate_id bigint         NOT NULL,
+    price               decimal(19, 4) NOT NULL,
+    PRIMARY KEY (id),
     UNIQUE (id)
 );
 
 CREATE TABLE certificates
 (
     id               bigint         NOT NULL AUTO_INCREMENT,
-    `name`          varchar(45)    NOT NULL,
+    `name`           varchar(45)    NOT NULL,
     `description`    varchar(45)    NOT NULL,
     price            decimal(19, 4) NOT NULL,
     duration         int            NOT NULL,
@@ -34,11 +55,11 @@ CREATE TABLE certificates
 
 CREATE TABLE tags
 (
-id     bigint      NOT NULL AUTO_INCREMENT,
-`name` varchar(45) NOT NULL,
-PRIMARY KEY (id),
-UNIQUE (id),
-UNIQUE (`name`)
+    id     bigint      NOT NULL AUTO_INCREMENT,
+    `name` varchar(45) NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE (id),
+    UNIQUE (`name`)
 );
 
 CREATE TABLE certificates_has_tags
