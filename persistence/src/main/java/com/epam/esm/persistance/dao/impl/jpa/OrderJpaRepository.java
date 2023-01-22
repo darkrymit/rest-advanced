@@ -2,6 +2,8 @@ package com.epam.esm.persistance.dao.impl.jpa;
 
 import com.epam.esm.persistance.dao.OrderRepository;
 import com.epam.esm.persistance.entity.Order;
+import com.epam.esm.persistance.entity.Order_;
+import java.util.List;
 import javax.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -24,4 +26,9 @@ public class OrderJpaRepository extends SimpleJpaRepository<Order, Long> impleme
     return entity.getId();
   }
 
+  @Override
+  public List<Order> findAllByOwnerId(Long id) {
+    return findAll(
+        (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(Order_.owner), id));
+  }
 }

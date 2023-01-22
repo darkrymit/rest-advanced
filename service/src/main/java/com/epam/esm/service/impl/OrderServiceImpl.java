@@ -48,4 +48,9 @@ public class OrderServiceImpl implements OrderService {
     order.setItems(orderItems);
     return orderRepository.save(order);
   }
+
+  @Override
+  public List<Order> getAllByOwnerId(Long id) {
+    return orderRepository.findAllByOwnerId(id);
+  }
 }

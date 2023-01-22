@@ -3,6 +3,7 @@ package com.epam.esm.service;
 import com.epam.esm.persistance.entity.Order;
 import com.epam.esm.service.exceptions.NoSuchOrderException;
 import com.epam.esm.service.payload.request.OrderCreateRequest;
+import java.util.List;
 
 
 /**
@@ -24,4 +25,6 @@ public interface OrderService {
   Order getById(long id) throws NoSuchOrderException;
 
   Order create(OrderCreateRequest request,String userEmail);
+
+  List<Order> getAllByOwnerId(Long id);
 }

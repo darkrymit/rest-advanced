@@ -1,7 +1,10 @@
 package com.epam.esm.web.controllers;
 
+import com.epam.esm.service.OrderService;
 import com.epam.esm.service.UserService;
+import com.epam.esm.web.dto.OrderDTO;
 import com.epam.esm.web.dto.UserDTO;
+import com.epam.esm.web.dto.assembler.OrderModelAssembler;
 import com.epam.esm.web.dto.assembler.UserModelAssembler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.CollectionModel;
@@ -25,6 +28,10 @@ public class UserController {
 
   private final UserService userService;
 
+  private final OrderModelAssembler orderModelAssembler;
+
+  private final OrderService orderService;
+
   @GetMapping
   public CollectionModel<UserDTO> allUsers() {
     return userModelAssembler.toCollectionModel(userService.findAll());
@@ -33,6 +40,11 @@ public class UserController {
   @GetMapping("/{id}")
   public UserDTO userById(@PathVariable Long id) {
     return userModelAssembler.toModel(userService.getById(id));
+  }
+
+  @GetMapping("/{id}/orders")
+  public CollectionModel<OrderDTO> getOrders(@PathVariable Long id) {
+    return orderModelAssembler.toCollectionModel(orderService.getAllByOwnerId(id));
   }
 
   @GetMapping("/me")
