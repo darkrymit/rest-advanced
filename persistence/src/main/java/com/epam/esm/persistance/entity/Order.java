@@ -18,6 +18,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Table(name = "orders")
@@ -37,6 +39,7 @@ public class Order {
 
   @OneToMany(mappedBy = "order", orphanRemoval = true)
   @ToString.Exclude
+  @Cascade(CascadeType.ALL)
   private Set<OrderItem> items  = new HashSet<>();
 
   @Column(nullable = false,name = "creation_date")
@@ -47,6 +50,12 @@ public class Order {
 
   @Column(name = "last_modified_date")
   private Instant lastModifiedDate;
+
+  public Order addOrderItem(OrderItem item){
+    items.add(item);
+    item.setOrder(this);
+    return this;
+  }
 
   @Override
   public boolean equals(Object o) {
