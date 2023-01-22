@@ -1,6 +1,5 @@
 package com.epam.esm.web.dto;
 
-import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Set;
 import lombok.Data;
@@ -15,8 +14,6 @@ public class OrderDTO extends RepresentationModel<OrderDTO> {
   private Long id;
 
   private Long ownerId;
-
-  private BigDecimal totalPrice;
 
   private Set<OrderItemDTO> items;
 

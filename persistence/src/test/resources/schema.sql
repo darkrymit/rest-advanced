@@ -22,7 +22,6 @@ CREATE TABLE orders
 (
     id                 bigint         NOT NULL AUTO_INCREMENT,
     owner_id           bigint         NOT NULL,
-    totalPrice         decimal(19, 4) NOT NULL,
     creation_date      datetime(6)    NOT NULL,
     last_modified_by   varchar(60)    NOT NULL,
     last_modified_date datetime(6)    NOT NULL,

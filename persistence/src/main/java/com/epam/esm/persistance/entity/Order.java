@@ -1,6 +1,5 @@
 package com.epam.esm.persistance.entity;
 
-import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Objects;
@@ -35,9 +34,6 @@ public class Order {
 
   @ManyToOne
   private User owner;
-
-  @Column(precision=19, scale=4)
-  private BigDecimal totalPrice;
 
   @OneToMany(mappedBy = "order", orphanRemoval = true)
   @ToString.Exclude

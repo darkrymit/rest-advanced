@@ -45,7 +45,7 @@ class OrderServiceImplTest {
   }
 
   private Order getOrder(User owner) {
-    Order order = new Order(1L, owner, BigDecimal.TEN, Set.of(), Instant.now(), owner.getEmail(),
+    Order order = new Order(1L, owner, Set.of(), Instant.now(), owner.getEmail(),
         Instant.now());
     order.setItems(Set.of(new OrderItem(1L, order, getGiftCertificate(), BigDecimal.TEN)));
     return order;
