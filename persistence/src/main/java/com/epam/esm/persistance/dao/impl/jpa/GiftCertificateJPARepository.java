@@ -4,6 +4,7 @@ import com.epam.esm.persistance.dao.GiftCertificateRepository;
 import com.epam.esm.persistance.dao.GiftCertificateSearchParameters;
 import com.epam.esm.persistance.dao.TagRepository;
 import com.epam.esm.persistance.entity.GiftCertificate;
+import com.epam.esm.persistance.entity.GiftCertificate_;
 import java.util.List;
 import javax.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +38,10 @@ public class GiftCertificateJPARepository extends SimpleJpaRepository<GiftCertif
   @Override
   public List<GiftCertificate> findAllAsList(GiftCertificateSearchParameters searchParameters) {
     return findAllAsList();
+  }
+
+  @Override
+  public List<GiftCertificate> findAllByNames(List<String> giftCertificates) {
+    return findAll((root, query, criteriaBuilder) -> root.get(GiftCertificate_.name).in(giftCertificates));
   }
 }

@@ -6,10 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.epam.esm.persistance.config.EmbeddedDatabaseJpaConfig;
 import com.epam.esm.persistance.entity.Order;
+import com.epam.esm.persistance.entity.OrderItem;
 import com.epam.esm.persistance.entity.User;
-import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Set;
+import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,7 +45,8 @@ class OrderJPARepositoryTest {
   @Test
   void saveShouldInsertEntryWithGeneratedIdWhenEntryHasIdNull() {
     User creator = getUser();
-    Order order = new Order(null, creator, BigDecimal.TEN, Set.of(),Instant.now(),creator.getEmail(),Instant.now());
+    Order order = new Order(null, creator, Set.of(), Instant.now(), creator.getEmail(),
+        Instant.now());
 
     Order saved = orderJpaRepository.save(order);
 
@@ -52,15 +54,15 @@ class OrderJPARepositoryTest {
   }
 
   @Test
-  void saveShouldUpdateEntryWithNewFirstNameWhenEntryExist() {
-    BigDecimal targetPrice = BigDecimal.ONE;
+  void saveShouldUpdateEntryWithLimitedItemsWhenEntryExist() {
     Order order = orderJpaRepository.findById(1L).orElseThrow();
+    Set<OrderItem> items = order.getItems().stream().limit(1).collect(Collectors.toSet());
 
-    order.setTotalPrice(targetPrice);
+    order.setItems(items);
 
     orderJpaRepository.save(order);
 
-    assertEquals(targetPrice, orderJpaRepository.findById(1L).orElseThrow().getTotalPrice());
+    assertEquals(1, orderJpaRepository.findById(1L).orElseThrow().getItems().size());
   }
 
   @Test

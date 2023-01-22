@@ -83,6 +83,10 @@ class GiftCertificateJPARepositoryTest {
   void findAllAsListShouldReturnNonEmptyListWhenCertificatesEntryExists() {
     assertFalse(giftCertificateJPARepository.findAllAsList().isEmpty());
   }
+  @Test
+  void findAllByNamesShouldReturnNonEmptyListWhenCertificatesEntryExists() {
+    assertFalse(giftCertificateJPARepository.findAllByNames(List.of("giftCertificate3","giftCertificate1")).isEmpty());
+  }
 
   @Test
   void findAllAsListShouldReturnNonEmptyListWhenCertificatesByParametersExists() {

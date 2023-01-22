@@ -22,4 +22,7 @@ public interface GiftCertificateRepository extends SimpleCrudRepository<GiftCert
    * @return all entities by given {@link GiftCertificateSearchParameters} as {@link List}.
    */
   List<GiftCertificate> findAllAsList(GiftCertificateSearchParameters searchParameters);
+
+
+  List<GiftCertificate> findAllByNames(List<String> giftCertificates);
 }
