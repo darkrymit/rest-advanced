@@ -6,6 +6,8 @@ import com.epam.esm.web.dto.assembler.UserModelAssembler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,6 +33,11 @@ public class UserController {
   @GetMapping("/{id}")
   public UserDTO userById(@PathVariable Long id) {
     return userModelAssembler.toModel(userService.getById(id));
+  }
+
+  @GetMapping("/me")
+  public UserDTO me(@AuthenticationPrincipal User user) {
+    return userModelAssembler.toModel(userService.getByEmail(user.getUsername()));
   }
 
 }

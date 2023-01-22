@@ -53,4 +53,13 @@ class UserServiceImplTest {
 
     assertNotNull(userService.getById(1L));
   }
+
+  @Test
+  void getByEmailShouldReturnNonNullWhenByExistingEmail() {
+    User preparedUser = getUser();
+
+    when(userRepository.findByEmail(preparedUser.getEmail())).thenReturn(Optional.of(preparedUser));
+
+    assertNotNull(userService.getByEmail(preparedUser.getEmail()));
+  }
 }

@@ -1,6 +1,7 @@
 package com.epam.esm.service;
 
 import com.epam.esm.persistance.entity.User;
+import com.epam.esm.service.exceptions.NoSuchUserByEmailException;
 import com.epam.esm.service.exceptions.NoSuchUserException;
 import java.util.List;
 
@@ -29,4 +30,13 @@ public interface UserService {
    * @throws NoSuchUserException if there is no entity by given id
    */
   User getById(long id) throws NoSuchUserException;
+
+  /**
+   * Returns {@link User} entry by email
+   *
+   * @param email email of requested entity
+   * @return entity with given email
+   * @throws NoSuchUserException if there is no entity by given email
+   */
+  User getByEmail(String email) throws NoSuchUserByEmailException;
 }
