@@ -128,6 +128,10 @@ public abstract class SimpleJpaRepository<T, I> implements SimpleCrudRepository<
     return getQuery(spec, getEntityType(), sort);
   }
 
+  protected <C> TypedQuery<C> getNamedQuery(String name, Class<C> resultClass) {
+    return entityManager.createNamedQuery(name, resultClass);
+  }
+
   protected <S extends T> TypedQuery<S> getQuery(@Nullable Specification<S> spec,
       Class<S> domainClass, Sort sort) {
     CriteriaBuilder builder = entityManager.getCriteriaBuilder();
