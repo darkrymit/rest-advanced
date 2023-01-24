@@ -1,12 +1,18 @@
 package com.epam.esm.web.controllers;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import com.epam.esm.service.OrderService;
+import com.epam.esm.service.TagService;
 import com.epam.esm.service.UserService;
+import com.epam.esm.web.dto.BestTagDTO;
 import com.epam.esm.web.dto.OrderDTO;
 import com.epam.esm.web.dto.UserDTO;
 import com.epam.esm.web.dto.assembler.OrderModelAssembler;
 import com.epam.esm.web.dto.assembler.UserModelAssembler;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -32,6 +38,10 @@ public class UserController {
 
   private final OrderService orderService;
 
+  private final TagService tagService;
+
+  private final ModelMapper modelMapper;
+
   @GetMapping
   public CollectionModel<UserDTO> allUsers() {
     return userModelAssembler.toCollectionModel(userService.findAll());
@@ -50,6 +60,13 @@ public class UserController {
   @GetMapping("/me")
   public UserDTO me(@AuthenticationPrincipal User user) {
     return userModelAssembler.toModel(userService.getByEmail(user.getUsername()));
+  }
+
+  @GetMapping("/best-buyer/most-used-tag")
+  public BestTagDTO getMostUsedTagForBestBuyer(){
+    BestTagDTO bestTagDTO = modelMapper.map(tagService.getMostUsedTagForBestBuyer(),BestTagDTO.class);
+    bestTagDTO.add(linkTo(methodOn(UserController.class).getMostUsedTagForBestBuyer()).withSelfRel());
+    return bestTagDTO;
   }
 
 }

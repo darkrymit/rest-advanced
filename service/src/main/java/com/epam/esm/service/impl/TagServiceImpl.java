@@ -2,6 +2,7 @@ package com.epam.esm.service.impl;
 
 import com.epam.esm.persistance.dao.TagRepository;
 import com.epam.esm.persistance.entity.Tag;
+import com.epam.esm.persistance.projection.BestTag;
 import com.epam.esm.service.TagService;
 import com.epam.esm.service.exceptions.NoSuchTagException;
 import com.epam.esm.service.payload.request.TagCreateRequest;
@@ -40,5 +41,10 @@ public class TagServiceImpl implements TagService {
   public Tag create(TagCreateRequest request) {
     Tag tag = new Tag(request.getName());
     return tagRepository.save(tag);
+  }
+
+  @Override
+  public BestTag getMostUsedTagForBestBuyer() {
+    return tagRepository.findMostUsedTagForBestBuyer().orElseThrow();
   }
 }
