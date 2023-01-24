@@ -1,4 +1,4 @@
-package com.epam.esm.persistance.dao;
+package com.epam.esm.persistance.dao.support.specification;
 
 import java.io.Serializable;
 import java.util.Arrays;

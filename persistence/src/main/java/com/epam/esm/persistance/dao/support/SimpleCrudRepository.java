@@ -1,4 +1,4 @@
-package com.epam.esm.persistance.dao;
+package com.epam.esm.persistance.dao.support;
 
 import java.util.List;
 import java.util.Optional;

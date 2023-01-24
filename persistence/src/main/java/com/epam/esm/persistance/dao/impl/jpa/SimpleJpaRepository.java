@@ -1,9 +1,9 @@
 package com.epam.esm.persistance.dao.impl.jpa;
 
-import com.epam.esm.persistance.dao.JpaSpecificationExecutor;
-import com.epam.esm.persistance.dao.SimpleCrudRepository;
-import com.epam.esm.persistance.dao.Sort;
-import com.epam.esm.persistance.dao.Specification;
+import com.epam.esm.persistance.dao.support.specification.JpaSpecificationExecutor;
+import com.epam.esm.persistance.dao.support.SimpleCrudRepository;
+import com.epam.esm.persistance.dao.support.Sort;
+import com.epam.esm.persistance.dao.support.specification.Specification;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;

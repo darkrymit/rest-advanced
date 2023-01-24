@@ -1,5 +1,6 @@
-package com.epam.esm.persistance.dao;
+package com.epam.esm.persistance.dao.support.specification;
 
+import com.epam.esm.persistance.dao.support.Sort;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.lang.Nullable;

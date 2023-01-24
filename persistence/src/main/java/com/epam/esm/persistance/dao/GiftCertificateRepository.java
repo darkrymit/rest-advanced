@@ -1,5 +1,6 @@
 package com.epam.esm.persistance.dao;
 
+import com.epam.esm.persistance.dao.support.SimpleCrudRepository;
 import com.epam.esm.persistance.entity.GiftCertificate;
 import java.util.List;
 

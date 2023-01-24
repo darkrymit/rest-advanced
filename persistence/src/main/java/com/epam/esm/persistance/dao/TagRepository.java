@@ -1,5 +1,6 @@
 package com.epam.esm.persistance.dao;
 
+import com.epam.esm.persistance.dao.support.SimpleCrudRepository;
 import com.epam.esm.persistance.entity.Tag;
 import com.epam.esm.persistance.projection.BestTag;
 import java.util.Optional;

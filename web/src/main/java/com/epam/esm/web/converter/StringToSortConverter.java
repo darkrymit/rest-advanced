@@ -1,8 +1,8 @@
 package com.epam.esm.web.converter;
 
-import com.epam.esm.persistance.dao.Sort;
-import com.epam.esm.persistance.dao.Sort.Direction;
-import com.epam.esm.persistance.dao.Sort.Order;
+import com.epam.esm.persistance.dao.support.Sort;
+import com.epam.esm.persistance.dao.support.Sort.Direction;
+import com.epam.esm.persistance.dao.support.Sort.Order;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
