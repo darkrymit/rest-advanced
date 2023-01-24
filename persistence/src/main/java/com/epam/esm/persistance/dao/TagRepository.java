@@ -1,6 +1,7 @@
 package com.epam.esm.persistance.dao;
 
 import com.epam.esm.persistance.entity.Tag;
+import com.epam.esm.persistance.projection.BestTag;
 import java.util.Optional;
 
 /**
@@ -21,4 +22,6 @@ public interface TagRepository extends SimpleCrudRepository<Tag, Long> {
    * @return the entity with the given name or {@link Optional#empty()} if none found.
    */
   Optional<Tag> findByName(String name);
+
+  Optional<BestTag> findMostUsedTagForBestBuyer();
 }

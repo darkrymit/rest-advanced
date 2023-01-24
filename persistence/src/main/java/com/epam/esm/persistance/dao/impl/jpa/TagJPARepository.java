@@ -3,8 +3,10 @@ package com.epam.esm.persistance.dao.impl.jpa;
 import com.epam.esm.persistance.dao.TagRepository;
 import com.epam.esm.persistance.entity.Tag;
 import com.epam.esm.persistance.entity.Tag_;
+import com.epam.esm.persistance.projection.BestTag;
 import java.util.Optional;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -17,7 +19,7 @@ import org.springframework.stereotype.Repository;
  * @since 1.0
  */
 @Repository
-public class TagJPARepository extends SimpleJpaRepository<Tag,Long> implements TagRepository {
+public class TagJPARepository extends SimpleJpaRepository<Tag, Long> implements TagRepository {
 
   @Autowired
   public TagJPARepository() {
@@ -35,6 +37,18 @@ public class TagJPARepository extends SimpleJpaRepository<Tag,Long> implements T
 
   @Override
   public Optional<Tag> findByName(String name) {
-    return findOne((root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(Tag_.name), name));
+    return findOne(
+        (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(Tag_.name), name));
   }
+
+  @Override
+  public Optional<BestTag> findMostUsedTagForBestBuyer() {
+    try {
+      return Optional.of(
+          getNamedQuery("findMostUsedTagForBestBuyer", BestTag.class).getSingleResult());
+    } catch (NoResultException e) {
+      return Optional.empty();
+    }
+  }
+
 }
