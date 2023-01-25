@@ -5,8 +5,14 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.epam.esm.persistance.config.EmbeddedDatabaseJpaConfig;
+import com.epam.esm.persistance.dao.support.Sort;
+import com.epam.esm.persistance.dao.support.Sort.Direction;
+import com.epam.esm.persistance.dao.support.Sort.Order;
+import com.epam.esm.persistance.dao.support.page.Page;
+import com.epam.esm.persistance.dao.support.page.PageRequest;
 import com.epam.esm.persistance.dao.support.page.Pageable;
 import com.epam.esm.persistance.entity.Tag;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.junit.jupiter.api.BeforeEach;
@@ -99,6 +105,31 @@ class TagJPARepositoryTest {
   }
 
   @Test
+  void findAllShouldReturnNotLastPageWhenHasNextPageByPageable() {
+    int requestSize = 1;
+    assertFalse(tagJPARepository.findAll(Pageable.ofSize(requestSize)).isLast());
+  }
+
+  @Test
+  void findAllShouldReturnPageWithTotalElementsGreaterZeroWhenAnyPageable() {
+    Pageable pageable = Pageable.ofSize(1);
+    assertFalse(tagJPARepository.findAll(pageable).isLast());
+  }
+
+  @Test
+  void findAllShouldReturnEqualPageWhenMultipleCallWithSamePageable() {
+    Pageable pageable = Pageable.ofSize(1);
+    Page<Tag> previousTagPage = tagJPARepository.findAll(pageable);
+    assertEquals(previousTagPage,tagJPARepository.findAll(pageable));
+  }
+
+  @Test
+  void findAllShouldReturnPageWithContentWhenByPageableWithNoOffsetAndSortByNameDesc() {
+    Pageable pageable = PageRequest.of(0, 2, new Sort(List.of(new Order("name", Direction.DESC))));
+    assertTrue(tagJPARepository.findAll(pageable).hasContent());
+  }
+
+  @Test
   void deleteShouldDeleteEntryWhenEntryExists() {
     Tag tag = tagJPARepository.findById(1L).orElseThrow();
 
@@ -114,5 +145,20 @@ class TagJPARepositoryTest {
     tagJPARepository.delete(tag);
 
     assertFalse(tagJPARepository.findAllAsList().isEmpty());
+  }
+
+  @Test
+  void findByNameShouldReturnPresentOptionalWhenByExistName() {
+    assertTrue(tagJPARepository.findByName("tagName1").isPresent());
+  }
+
+  @Test
+  void findByNameShouldReturnEmptyOptionalWhenByNotExistName() {
+    assertTrue(tagJPARepository.findByName("notExist").isEmpty());
+  }
+
+  @Test
+  void findMostUsedTagForBestBuyerShouldReturnPresentOptionalWhenExistBestBuyerAndMostUsedTagForHim() {
+    assertTrue(tagJPARepository.findMostUsedTagForBestBuyer().isPresent());
   }
 }

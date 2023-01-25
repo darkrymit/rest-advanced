@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.epam.esm.persistance.config.EmbeddedDatabaseJpaConfig;
+import com.epam.esm.persistance.dao.support.page.Pageable;
 import com.epam.esm.persistance.entity.GiftCertificate;
 import com.epam.esm.persistance.entity.Order;
 import com.epam.esm.persistance.entity.OrderItem;
@@ -129,5 +130,11 @@ class OrderJPARepositoryTest {
     orderJpaRepository.delete(order);
 
     assertFalse(orderJpaRepository.findAllAsList().isEmpty());
+  }
+
+  @Test
+  void findAllByOwnerIdShouldReturnPAgeWithContentWhenOwnerHaveOrders() {
+    Pageable pageable = Pageable.unpaged();
+    assertTrue(orderJpaRepository.findAllByOwnerId(1L,pageable).hasContent());
   }
 }
