@@ -4,12 +4,12 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.List;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Value;
 import org.springframework.hateoas.RepresentationModel;
 
 @EqualsAndHashCode(callSuper = true)
-@Value
+@Data
 public class GiftCertificateDTO extends RepresentationModel<GiftCertificateDTO> {
   Long id;
   String name;

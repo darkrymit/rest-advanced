@@ -5,8 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.epam.esm.persistance.config.EmbeddedDatabaseJpaConfig;
-import com.epam.esm.persistance.dao.GiftCertificateSearchParameters;
+import com.epam.esm.persistance.dao.support.page.Pageable;
+import com.epam.esm.persistance.dao.support.specification.Specification;
 import com.epam.esm.persistance.entity.GiftCertificate;
+import com.epam.esm.persistance.entity.GiftCertificate_;
 import com.epam.esm.persistance.entity.Tag;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
@@ -89,9 +91,12 @@ class GiftCertificateJPARepositoryTest {
   }
 
   @Test
-  void findAllAsListShouldReturnNonEmptyListWhenCertificatesByParametersExists() {
-    GiftCertificateSearchParameters searchParameters = new GiftCertificateSearchParameters("tagName3","gift",null);
-    assertFalse(giftCertificateJPARepository.findAllAsList(searchParameters).isEmpty());
+  void findAllShouldReturnPageWithContentWhenCertificatesByParametersExists() {
+    String pattern = "%" + "gift" + "%";
+    Specification<GiftCertificate> specification = (root, query, cb) -> cb.or(cb.like(root.get(GiftCertificate_.name), pattern),
+        cb.like(root.get(GiftCertificate_.description), pattern));
+
+    assertTrue(giftCertificateJPARepository.findAll(specification, Pageable.unpaged()).hasContent());
   }
 
   @Test

@@ -1,13 +1,14 @@
 package com.epam.esm.service;
 
 
+import com.epam.esm.persistance.dao.support.page.Page;
+import com.epam.esm.persistance.dao.support.page.Pageable;
 import com.epam.esm.persistance.entity.GiftCertificate;
 import com.epam.esm.persistance.entity.Tag;
 import com.epam.esm.service.exceptions.NoSuchGiftCertificateException;
 import com.epam.esm.service.payload.request.GiftCertificateCreateRequest;
 import com.epam.esm.service.payload.request.GiftCertificateSearchRequest;
 import com.epam.esm.service.payload.request.GiftCertificateUpdateRequest;
-import java.util.List;
 
 /**
  * Interface describes business logic for working with {@link GiftCertificate} entity.
@@ -22,12 +23,14 @@ public interface GiftCertificateService {
 
   /**
    * Return all {@link GiftCertificate} entities according to {@link GiftCertificateSearchRequest}
+   * and {@link Pageable}
    *
-   * @param searchRequest request for filtering sorting
-   * @return {@link List} of {@link GiftCertificate} filtered and sorted according to
-   * {@link GiftCertificateSearchRequest}
+   * @param searchRequest request for filtering
+   * @param pageable      request for sorting and paging
+   * @return {@link Page} of {@link GiftCertificate} filtered and sorted according to
+   * {@link GiftCertificateSearchRequest} and {@link Pageable}
    */
-  List<GiftCertificate> findAll(GiftCertificateSearchRequest searchRequest);
+  Page<GiftCertificate> findAll(GiftCertificateSearchRequest searchRequest, Pageable pageable);
 
   /**
    * Returns {@link GiftCertificate} entry by id

@@ -1,10 +1,14 @@
 package com.epam.esm.service.impl;
 
 import com.epam.esm.persistance.dao.GiftCertificateRepository;
-import com.epam.esm.persistance.dao.GiftCertificateSearchParameters;
 import com.epam.esm.persistance.dao.TagRepository;
+import com.epam.esm.persistance.dao.support.page.Page;
+import com.epam.esm.persistance.dao.support.page.Pageable;
+import com.epam.esm.persistance.dao.support.specification.Specification;
 import com.epam.esm.persistance.entity.GiftCertificate;
+import com.epam.esm.persistance.entity.GiftCertificate_;
 import com.epam.esm.persistance.entity.Tag;
+import com.epam.esm.persistance.entity.Tag_;
 import com.epam.esm.service.GiftCertificateService;
 import com.epam.esm.service.exceptions.NoSuchGiftCertificateException;
 import com.epam.esm.service.impl.handler.GiftCertificateUpdateHandler;
@@ -36,11 +40,38 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     return () -> new NoSuchGiftCertificateException(id);
   }
 
+  private static Specification<GiftCertificate> getPartSpecification(
+      GiftCertificateSearchRequest searchRequest) {
+    String pattern = "%" + searchRequest.getPart() + "%";
+    return (root, query, cb) -> cb.or(cb.like(root.get(GiftCertificate_.name), pattern),
+        cb.like(root.get(GiftCertificate_.description), pattern));
+  }
+
+  private static Specification<GiftCertificate> getTagsSpecification(
+      GiftCertificateSearchRequest searchRequest) {
+    List<String> tags = searchRequest.getTags();
+    return tags.stream().map(GiftCertificateServiceImpl::getTagSpecification)
+        .reduce(Specification.emptySpecification(), Specification::and);
+  }
+
+  private static Specification<GiftCertificate> getTagSpecification(String tag) {
+    return (root, query, cb) -> cb.equal(root.join(GiftCertificate_.tags).get(Tag_.name), tag);
+  }
+
   @Override
-  public List<GiftCertificate> findAll(GiftCertificateSearchRequest searchRequest) {
-    return giftCertificateRepository.findAllAsList(
-        new GiftCertificateSearchParameters(searchRequest.getTagName(), searchRequest.getPart(),
-            searchRequest.getSort()));
+  public Page<GiftCertificate> findAll(GiftCertificateSearchRequest searchRequest,
+      Pageable pageable) {
+    Specification<GiftCertificate> specification = Specification.emptySpecification();
+
+    if (searchRequest.isTagsPresent()) {
+      specification = specification.and(getTagsSpecification(searchRequest));
+    }
+
+    if (searchRequest.isPartPresent()) {
+      specification = specification.and(getPartSpecification(searchRequest));
+    }
+
+    return giftCertificateRepository.findAll(specification, pageable);
   }
 
   @Override

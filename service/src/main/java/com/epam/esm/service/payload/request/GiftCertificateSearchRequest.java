@@ -1,14 +1,20 @@
 package com.epam.esm.service.payload.request;
 
-import com.epam.esm.persistance.dao.support.Sort;
-import com.epam.esm.validation.tag.optional.OptionalName;
+import com.epam.esm.validation.tag.Name;
+import java.util.List;
 import lombok.Value;
+import org.springframework.util.StringUtils;
 
 @Value
 public class GiftCertificateSearchRequest {
-  @OptionalName
-  String tagName;
+  List<@Name String> tags;
   String part;
-  Sort sort;
 
+  public boolean isTagsPresent() {
+    return tags != null;
+  }
+
+  public boolean isPartPresent() {
+    return StringUtils.hasText(part);
+  }
 }

@@ -13,6 +13,9 @@ import static org.mockito.Mockito.when;
 
 import com.epam.esm.persistance.dao.GiftCertificateRepository;
 import com.epam.esm.persistance.dao.TagRepository;
+import com.epam.esm.persistance.dao.support.page.PageImpl;
+import com.epam.esm.persistance.dao.support.page.Pageable;
+import com.epam.esm.persistance.dao.support.specification.Specification;
 import com.epam.esm.persistance.entity.GiftCertificate;
 import com.epam.esm.persistance.entity.Tag;
 import com.epam.esm.service.impl.handler.GiftCertificateUpdateHandler;
@@ -81,16 +84,17 @@ class GiftCertificateServiceImplTest {
   }
 
   @Test
-  void findAllShouldReturnNotEmptyListWhenEntriesExists() {
+  void findAllShouldReturnNotEmptyContentWhenEntriesExists() {
     List<GiftCertificate> giftCertificates = getGiftCertificates();
-    GiftCertificateSearchRequest searchRequest = new GiftCertificateSearchRequest("tag", null,
+    GiftCertificateSearchRequest searchRequest = new GiftCertificateSearchRequest(List.of("tag"),
         null);
+    Pageable pageable = Pageable.unpaged();
 
-    when(giftCertificateRepository.findAllAsList(argThat(
-        parameters -> parameters.isTagNamePresent() && !parameters.isPartPresent()
-            && !parameters.isSortPresent()))).thenReturn(giftCertificates);
+    when(giftCertificateRepository.findAll(
+        argThat(spec -> !Specification.emptySpecification().equals(spec)), pageable)).thenReturn(
+        new PageImpl<>(giftCertificates));
 
-    assertFalse(giftCertificateService.findAll(searchRequest).isEmpty());
+    assertFalse(giftCertificateService.findAll(searchRequest, pageable).getContent().isEmpty());
   }
 
   @Test
