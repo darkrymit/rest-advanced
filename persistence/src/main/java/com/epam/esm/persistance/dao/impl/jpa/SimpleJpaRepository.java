@@ -118,6 +118,7 @@ public abstract class SimpleJpaRepository<T, I> implements PagingRepository<T, I
     return getQuery(spec, sort).getResultList();
   }
 
+  @Override
   public Page<T> findAll(Specification<T> spec, Pageable pageable) {
     TypedQuery<T> query = this.getQuery(spec, pageable);
     return readPage(query, getEntityType(), pageable, spec);
