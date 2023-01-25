@@ -1,5 +1,6 @@
 package com.epam.esm.persistance.dao.support;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Stream;
 import lombok.Value;
@@ -13,7 +14,7 @@ import lombok.Value;
  * @since 1.0
  */
 @Value
-public class Sort {
+public class Sort implements Serializable {
 
   private static final Sort UNSORTED = new Sort(List.of());
 
@@ -69,7 +70,7 @@ public class Sort {
    * @since 1.0
    */
   @Value
-  public static class Order {
+  public static class Order implements Serializable{
 
     String property;
     Direction direction;
