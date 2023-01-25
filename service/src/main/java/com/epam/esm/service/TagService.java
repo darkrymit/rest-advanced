@@ -1,10 +1,11 @@
 package com.epam.esm.service;
 
+import com.epam.esm.persistance.dao.support.page.Page;
+import com.epam.esm.persistance.dao.support.page.Pageable;
 import com.epam.esm.persistance.entity.Tag;
 import com.epam.esm.persistance.projection.BestTag;
 import com.epam.esm.service.exceptions.NoSuchTagException;
 import com.epam.esm.service.payload.request.TagCreateRequest;
-import java.util.List;
 
 
 /**
@@ -18,11 +19,12 @@ import java.util.List;
 public interface TagService {
 
   /**
-   * Return all {@link Tag} entities
+   * Return all {@link Tag} entities by pageable request
    *
-   * @return {@link List} of all {@link Tag} that exist
+   * @param pageable request for paging
+   * @return {@link Page} of all {@link Tag} that exist by request
    */
-  List<Tag> findAll();
+  Page<Tag> findAll(Pageable pageable);
 
   /**
    * Returns {@link Tag} entry by id

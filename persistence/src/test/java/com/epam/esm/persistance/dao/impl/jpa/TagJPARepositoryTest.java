@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.epam.esm.persistance.config.EmbeddedDatabaseJpaConfig;
+import com.epam.esm.persistance.dao.support.page.Pageable;
 import com.epam.esm.persistance.entity.Tag;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -34,7 +35,7 @@ class TagJPARepositoryTest {
 
   @Test
   void saveShouldInsertEntryWithGeneratedIdWhenEntryHasIdNull() {
-    Tag tag = new Tag(null,"nemesis");
+    Tag tag = new Tag(null, "nemesis");
 
     Tag savedTag = tagJPARepository.save(tag);
 
@@ -50,8 +51,7 @@ class TagJPARepositoryTest {
 
     tagJPARepository.save(tag);
 
-    assertEquals(targetName,
-        tagJPARepository.findById(1L).orElseThrow().getName());
+    assertEquals(targetName, tagJPARepository.findById(1L).orElseThrow().getName());
   }
 
   @Test
@@ -77,6 +77,25 @@ class TagJPARepositoryTest {
   @Test
   void findAllAsListShouldReturnNonEmptyListWhenCertificatesEntryExists() {
     assertFalse(tagJPARepository.findAllAsList().isEmpty());
+  }
+
+  @Test
+  void findAllShouldReturnLimitedTagsWhenByPageable() {
+    int requestSize = 2;
+    assertEquals(requestSize,
+        tagJPARepository.findAll(Pageable.ofSize(requestSize)).getNumberOfElements());
+  }
+
+  @Test
+  void findAllShouldReturnNotEmptyContentWhenByPageable() {
+    int requestSize = 2;
+    assertFalse(tagJPARepository.findAll(Pageable.ofSize(requestSize)).getContent().isEmpty());
+  }
+
+  @Test
+  void findAllShouldReturnFirstPageWhenByPageableWithNoOffset() {
+    int requestSize = 2;
+    assertTrue(tagJPARepository.findAll(Pageable.ofSize(requestSize)).isFirst());
   }
 
   @Test

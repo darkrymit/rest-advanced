@@ -11,6 +11,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.epam.esm.persistance.dao.TagRepository;
+import com.epam.esm.persistance.dao.support.page.PageImpl;
+import com.epam.esm.persistance.dao.support.page.Pageable;
 import com.epam.esm.persistance.entity.Tag;
 import com.epam.esm.service.payload.request.TagCreateRequest;
 import java.util.List;
@@ -47,12 +49,13 @@ class TagServiceImplTest {
   }
 
   @Test
-  void findAllShouldReturnNotEmptyListWhenEntriesExists() {
+  void findAllShouldReturnNotEmptyContentWhenEntriesExists() {
     List<Tag> preparedTags = getTags();
+    Pageable pageable = Pageable.unpaged();
 
-    when(tagRepository.findAllAsList()).thenReturn(preparedTags);
+    when(tagRepository.findAll(pageable)).thenReturn(new PageImpl<>(preparedTags,pageable,preparedTags.size()));
 
-    assertFalse(tagService.findAll().isEmpty());
+    assertFalse(tagService.findAll(pageable).getContent().isEmpty());
   }
 
   @Test

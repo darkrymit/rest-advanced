@@ -1,12 +1,13 @@
 package com.epam.esm.service.impl;
 
 import com.epam.esm.persistance.dao.TagRepository;
+import com.epam.esm.persistance.dao.support.page.Page;
+import com.epam.esm.persistance.dao.support.page.Pageable;
 import com.epam.esm.persistance.entity.Tag;
 import com.epam.esm.persistance.projection.BestTag;
 import com.epam.esm.service.TagService;
 import com.epam.esm.service.exceptions.NoSuchTagException;
 import com.epam.esm.service.payload.request.TagCreateRequest;
-import java.util.List;
 import java.util.function.Supplier;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,8 +23,8 @@ public class TagServiceImpl implements TagService {
   }
 
   @Override
-  public List<Tag> findAll() {
-    return tagRepository.findAllAsList();
+  public Page<Tag> findAll(Pageable pageable) {
+    return tagRepository.findAll(pageable);
   }
 
   @Override

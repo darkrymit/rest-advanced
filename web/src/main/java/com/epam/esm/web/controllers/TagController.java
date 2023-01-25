@@ -1,14 +1,16 @@
 package com.epam.esm.web.controllers;
 
+import com.epam.esm.persistance.dao.support.page.Pageable;
 import com.epam.esm.persistance.entity.Tag;
 import com.epam.esm.service.TagService;
 import com.epam.esm.service.payload.request.TagCreateRequest;
 import com.epam.esm.web.dto.TagDTO;
-import com.epam.esm.web.dto.Tags;
+import com.epam.esm.web.dto.assembler.PagedResourcesAssembler;
 import com.epam.esm.web.dto.assembler.TagModelAssembler;
-import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -27,16 +29,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/tags", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 @Validated
 @RequiredArgsConstructor
+@Slf4j
 public class TagController {
 
   private final TagService tagService;
 
   private final TagModelAssembler tagModelAssembler;
 
+  private final PagedResourcesAssembler<Tag> pagedResourcesAssembler;
+
   @GetMapping
-  public Tags allTags() {
-    List<Tag> tags = tagService.findAll();
-    return new Tags(tags, tags.size());
+  public PagedModel<TagDTO> allTags(Pageable pageable) {
+    log.debug("Pageable {}",pageable);
+    return pagedResourcesAssembler.toModel(tagService.findAll(pageable), tagModelAssembler);
   }
 
   @PostMapping
