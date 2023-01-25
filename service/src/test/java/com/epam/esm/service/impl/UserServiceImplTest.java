@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
 import com.epam.esm.persistance.dao.UserRepository;
+import com.epam.esm.persistance.dao.support.page.PageImpl;
+import com.epam.esm.persistance.dao.support.page.Pageable;
 import com.epam.esm.persistance.entity.User;
 import java.time.Instant;
 import java.util.List;
@@ -37,12 +39,13 @@ class UserServiceImplTest {
   }
 
   @Test
-  void findAllShouldReturnNotEmptyListWhenEntriesExists() {
+  void findAllShouldReturnPageWithNotEmptyContentWhenEntriesExists() {
     List<User> preparedUsers = getUsers();
+    Pageable pageable = Pageable.unpaged();
 
-    when(userRepository.findAllAsList()).thenReturn(preparedUsers);
+    when(userRepository.findAll(pageable)).thenReturn(new PageImpl<>(preparedUsers));
 
-    assertFalse(userService.findAll().isEmpty());
+    assertFalse(userService.findAll(pageable).getContent().isEmpty());
   }
 
   @Test

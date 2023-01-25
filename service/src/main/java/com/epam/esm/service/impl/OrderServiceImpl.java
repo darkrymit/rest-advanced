@@ -3,6 +3,8 @@ package com.epam.esm.service.impl;
 import com.epam.esm.persistance.dao.GiftCertificateRepository;
 import com.epam.esm.persistance.dao.OrderRepository;
 import com.epam.esm.persistance.dao.UserRepository;
+import com.epam.esm.persistance.dao.support.page.Page;
+import com.epam.esm.persistance.dao.support.page.Pageable;
 import com.epam.esm.persistance.entity.GiftCertificate;
 import com.epam.esm.persistance.entity.Order;
 import com.epam.esm.persistance.entity.OrderItem;
@@ -50,7 +52,7 @@ public class OrderServiceImpl implements OrderService {
   }
 
   @Override
-  public List<Order> getAllByOwnerId(Long id) {
-    return orderRepository.findAllByOwnerId(id);
+  public Page<Order> getAllByOwnerId(Long id, Pageable pageable) {
+    return orderRepository.findAllByOwnerId(id,pageable);
   }
 }

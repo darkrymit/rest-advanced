@@ -1,11 +1,12 @@
 package com.epam.esm.service.impl;
 
 import com.epam.esm.persistance.dao.UserRepository;
+import com.epam.esm.persistance.dao.support.page.Page;
+import com.epam.esm.persistance.dao.support.page.Pageable;
 import com.epam.esm.persistance.entity.User;
 import com.epam.esm.service.UserService;
 import com.epam.esm.service.exceptions.NoSuchUserByEmailException;
 import com.epam.esm.service.exceptions.NoSuchUserException;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +17,8 @@ public class UserServiceImpl implements UserService {
   private final UserRepository userRepository;
 
   @Override
-  public List<User> findAll() {
-    return userRepository.findAllAsList();
+  public Page<User> findAll(Pageable pageable) {
+    return userRepository.findAll(pageable);
   }
 
   @Override

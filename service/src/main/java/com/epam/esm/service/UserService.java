@@ -1,9 +1,10 @@
 package com.epam.esm.service;
 
+import com.epam.esm.persistance.dao.support.page.Page;
+import com.epam.esm.persistance.dao.support.page.Pageable;
 import com.epam.esm.persistance.entity.User;
 import com.epam.esm.service.exceptions.NoSuchUserByEmailException;
 import com.epam.esm.service.exceptions.NoSuchUserException;
-import java.util.List;
 
 
 /**
@@ -16,11 +17,11 @@ import java.util.List;
 public interface UserService {
 
   /**
-   * Return all {@link User} entities
+   * Return {@link User} entities by {@link Pageable}
    *
-   * @return {@link List} of all {@link User} that exist
+   * @return {@link Page} of {@link User} by {@link Pageable}
    */
-  List<User> findAll();
+  Page<User> findAll(Pageable pageable);
 
   /**
    * Returns {@link User} entry by id
