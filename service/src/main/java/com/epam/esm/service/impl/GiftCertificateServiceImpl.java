@@ -13,6 +13,7 @@ import com.epam.esm.service.GiftCertificateService;
 import com.epam.esm.service.exceptions.NoSuchGiftCertificateException;
 import com.epam.esm.service.impl.handler.GiftCertificateUpdateHandler;
 import com.epam.esm.service.payload.request.GiftCertificateCreateRequest;
+import com.epam.esm.service.payload.request.GiftCertificatePriceUpdateRequest;
 import com.epam.esm.service.payload.request.GiftCertificateSearchRequest;
 import com.epam.esm.service.payload.request.GiftCertificateUpdateRequest;
 import java.time.ZonedDateTime;
@@ -109,6 +110,14 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
 
     giftCertificate = giftCertificateUpdateHandler.handle(updateRequest, giftCertificate);
 
+    return giftCertificateRepository.save(giftCertificate);
+  }
+
+  @Override
+  public GiftCertificate update(long id, GiftCertificatePriceUpdateRequest updateRequest) {
+    GiftCertificate giftCertificate = giftCertificateRepository.findById(id)
+        .orElseThrow(getNoSuchGiftCertificateException(id));
+    giftCertificate.setPrice(updateRequest.getPrice());
     return giftCertificateRepository.save(giftCertificate);
   }
 

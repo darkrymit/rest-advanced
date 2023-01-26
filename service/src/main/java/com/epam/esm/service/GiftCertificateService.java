@@ -7,6 +7,7 @@ import com.epam.esm.persistance.entity.GiftCertificate;
 import com.epam.esm.persistance.entity.Tag;
 import com.epam.esm.service.exceptions.NoSuchGiftCertificateException;
 import com.epam.esm.service.payload.request.GiftCertificateCreateRequest;
+import com.epam.esm.service.payload.request.GiftCertificatePriceUpdateRequest;
 import com.epam.esm.service.payload.request.GiftCertificateSearchRequest;
 import com.epam.esm.service.payload.request.GiftCertificateUpdateRequest;
 
@@ -69,4 +70,14 @@ public interface GiftCertificateService {
    */
   GiftCertificate update(long id, GiftCertificateUpdateRequest updateRequest)
       throws NoSuchGiftCertificateException;
+
+  /**
+   * Modify {@link GiftCertificate#getPrice()} by given {@link GiftCertificatePriceUpdateRequest}
+   *
+   * @param id            id of requested entity
+   * @param updateRequest request containing all required data to update entity
+   * @return entity updated by given request
+   * @throws NoSuchGiftCertificateException if there is no entity by given id
+   */
+  GiftCertificate update(long id, GiftCertificatePriceUpdateRequest updateRequest);
 }

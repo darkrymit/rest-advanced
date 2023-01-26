@@ -4,6 +4,7 @@ import com.epam.esm.persistance.dao.support.page.Pageable;
 import com.epam.esm.persistance.entity.GiftCertificate;
 import com.epam.esm.service.GiftCertificateService;
 import com.epam.esm.service.payload.request.GiftCertificateCreateRequest;
+import com.epam.esm.service.payload.request.GiftCertificatePriceUpdateRequest;
 import com.epam.esm.service.payload.request.GiftCertificateSearchRequest;
 import com.epam.esm.service.payload.request.GiftCertificateUpdateRequest;
 import com.epam.esm.web.dto.GiftCertificateDTO;
@@ -70,6 +71,13 @@ public class GiftCertificateController {
   @PatchMapping("/{id}")
   public ResponseEntity<GiftCertificateDTO> updateGiftCertificate(@PathVariable Long id,
       @RequestBody GiftCertificateUpdateRequest request) {
+    GiftCertificateDTO giftCertificateDTO = giftCertificateModelAssembler.toModel(
+        giftCertificateService.update(id, request));
+    return ResponseEntity.ok(giftCertificateDTO);
+  }
+  @PatchMapping("/{id}/price")
+  public ResponseEntity<GiftCertificateDTO> updateGiftCertificatePrice(@PathVariable Long id,
+      @RequestBody GiftCertificatePriceUpdateRequest request) {
     GiftCertificateDTO giftCertificateDTO = giftCertificateModelAssembler.toModel(
         giftCertificateService.update(id, request));
     return ResponseEntity.ok(giftCertificateDTO);

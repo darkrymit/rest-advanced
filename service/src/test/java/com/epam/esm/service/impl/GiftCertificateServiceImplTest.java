@@ -20,6 +20,7 @@ import com.epam.esm.persistance.entity.GiftCertificate;
 import com.epam.esm.persistance.entity.Tag;
 import com.epam.esm.service.impl.handler.GiftCertificateUpdateHandler;
 import com.epam.esm.service.payload.request.GiftCertificateCreateRequest;
+import com.epam.esm.service.payload.request.GiftCertificatePriceUpdateRequest;
 import com.epam.esm.service.payload.request.GiftCertificateSearchRequest;
 import com.epam.esm.service.payload.request.GiftCertificateUpdateRequest;
 import java.math.BigDecimal;
@@ -153,5 +154,17 @@ class GiftCertificateServiceImplTest {
 
     assertEquals(updateRequest.getName(),
         giftCertificateService.update(giftCertificateOriginal.getId(), updateRequest).getName());
+  }
+  @Test
+  void updateShouldReturnGiftCertificateWithPriceMatchingToRequestWhenPriceUpdateRequest() {
+    GiftCertificate giftCertificateOriginal = getGiftCertificate();
+    GiftCertificatePriceUpdateRequest updateRequest = new GiftCertificatePriceUpdateRequest(BigDecimal.valueOf(22));
+
+    when(giftCertificateRepository.findById(giftCertificateOriginal.getId())).thenReturn(
+        Optional.of(giftCertificateOriginal));
+    when(giftCertificateRepository.save(any())).thenAnswer(returnsFirstArg());
+
+    assertEquals(updateRequest.getPrice(),
+        giftCertificateService.update(giftCertificateOriginal.getId(), updateRequest).getPrice());
   }
 }
