@@ -91,7 +91,8 @@ class GiftCertificateServiceImplTest {
     Pageable pageable = Pageable.unpaged();
 
     when(giftCertificateRepository.findAll(
-        argThat(spec -> !Specification.emptySpecification().equals(spec)), pageable)).thenReturn(
+        argThat(spec -> !Specification.emptySpecification().equals(spec)),
+        (Pageable) argThat(arg -> arg.equals(pageable)))).thenReturn(
         new PageImpl<>(giftCertificates));
 
     assertFalse(giftCertificateService.findAll(searchRequest, pageable).getContent().isEmpty());
