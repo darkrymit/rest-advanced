@@ -16,7 +16,7 @@ import com.epam.esm.service.payload.request.GiftCertificateCreateRequest;
 import com.epam.esm.service.payload.request.GiftCertificatePriceUpdateRequest;
 import com.epam.esm.service.payload.request.GiftCertificateSearchRequest;
 import com.epam.esm.service.payload.request.GiftCertificateUpdateRequest;
-import java.time.ZonedDateTime;
+import java.time.Instant;
 import java.util.List;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -96,8 +96,8 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
         .orElseGet(() -> tagRepository.save(new Tag(tagName)))).collect(Collectors.toList());
 
     GiftCertificate giftCertificate = new GiftCertificate(null, request.getName(),
-        request.getDescription(), request.getPrice(), request.getDuration(), ZonedDateTime.now(),
-        ZonedDateTime.now(), tags);
+        request.getDescription(), request.getPrice(), request.getDuration(), Instant.now(),
+        Instant.now(), tags);
 
     return giftCertificateRepository.save(giftCertificate);
   }

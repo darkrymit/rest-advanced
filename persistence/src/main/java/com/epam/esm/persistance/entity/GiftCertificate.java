@@ -1,7 +1,7 @@
 package com.epam.esm.persistance.entity;
 
 import java.math.BigDecimal;
-import java.time.ZonedDateTime;
+import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -50,9 +50,9 @@ public class GiftCertificate {
   private Integer duration;
 
   @Column(name = "create_date")
-  private ZonedDateTime createDate;
+  private Instant createDate;
   @Column(name = "last_update_date")
-  private ZonedDateTime lastUpdateDate;
+  private Instant lastUpdateDate;
 
   @ManyToMany
   @JoinTable(name = "certificates_has_tags",

@@ -24,7 +24,7 @@ import com.epam.esm.service.payload.request.GiftCertificatePriceUpdateRequest;
 import com.epam.esm.service.payload.request.GiftCertificateSearchRequest;
 import com.epam.esm.service.payload.request.GiftCertificateUpdateRequest;
 import java.math.BigDecimal;
-import java.time.ZonedDateTime;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -69,15 +69,15 @@ class GiftCertificateServiceImplTest {
 
   private List<GiftCertificate> getGiftCertificates() {
     return List.of(
-        new GiftCertificate(1L, "new", "New certificate", BigDecimal.TEN, 5, ZonedDateTime.now(),
-            ZonedDateTime.now(), getTags()),
+        new GiftCertificate(1L, "new", "New certificate", BigDecimal.TEN, 5, Instant.now(),
+            Instant.now(), getTags()),
         new GiftCertificate(2L, "standard", "Real good certificate", BigDecimal.valueOf(20), 15,
-            ZonedDateTime.now(), ZonedDateTime.now(), getTags().subList(0, 1)));
+            Instant.now(), Instant.now(), getTags().subList(0, 1)));
   }
 
   private GiftCertificate getGiftCertificate() {
     return new GiftCertificate(4L, "second", "Second grade", BigDecimal.valueOf(40), 2,
-        ZonedDateTime.now(), ZonedDateTime.now(), getTags());
+        Instant.now(), Instant.now(), getTags());
   }
 
   private List<Tag> getTags() {

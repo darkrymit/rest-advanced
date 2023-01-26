@@ -11,7 +11,7 @@ import com.epam.esm.persistance.entity.GiftCertificate;
 import com.epam.esm.persistance.entity.GiftCertificate_;
 import com.epam.esm.persistance.entity.Tag;
 import java.math.BigDecimal;
-import java.time.ZonedDateTime;
+import java.time.Instant;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -41,7 +41,7 @@ class GiftCertificateJPARepositoryTest {
   @Test
   void saveShouldInsertEntryWithGeneratedIdWhenEntryHasIdNull() {
     GiftCertificate certificate = new GiftCertificate(null, "test", "testing", BigDecimal.TEN, 405,
-        ZonedDateTime.now(), ZonedDateTime.now(), List.of(new Tag(1L, null)));
+        Instant.now(), Instant.now(), List.of(new Tag(1L, null)));
 
     GiftCertificate savedCertificate = giftCertificateJPARepository.save(certificate);
 

@@ -11,7 +11,6 @@ import com.epam.esm.persistance.entity.Tag;
 import com.epam.esm.persistance.entity.User;
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -37,7 +36,7 @@ class OrderServiceImplTest {
 
   private GiftCertificate getGiftCertificate() {
     return new GiftCertificate(4L, "second", "Second grade", BigDecimal.valueOf(40), 2,
-        ZonedDateTime.now(), ZonedDateTime.now(), getTags());
+        Instant.now(), Instant.now(), getTags());
   }
 
   private List<Tag> getTags() {
