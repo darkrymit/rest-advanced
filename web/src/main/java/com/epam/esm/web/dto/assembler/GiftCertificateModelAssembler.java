@@ -18,11 +18,14 @@ import org.springframework.stereotype.Component;
 public class GiftCertificateModelAssembler implements
     RepresentationModelAssembler<GiftCertificate, GiftCertificateDTO> {
 
+  private final TagModelAssembler tagModelAssembler;
+
   private final ModelMapper modelMapper;
 
   @Override
   public GiftCertificateDTO toModel(GiftCertificate entity) {
     GiftCertificateDTO giftCertificateDTO = modelMapper.map(entity, GiftCertificateDTO.class);
+    giftCertificateDTO.setTags(tagModelAssembler.toCollectionModel(entity.getTags()));
     Link selfLink = linkTo(methodOn(GiftCertificateController.class).giftCertificateById(
         entity.getId())).withSelfRel();
     giftCertificateDTO.add(selfLink);
