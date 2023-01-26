@@ -114,6 +114,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
   }
 
   @Override
+  @Transactional
   public GiftCertificate update(long id, GiftCertificatePriceUpdateRequest updateRequest) {
     GiftCertificate giftCertificate = giftCertificateRepository.findById(id)
         .orElseThrow(getNoSuchGiftCertificateException(id));

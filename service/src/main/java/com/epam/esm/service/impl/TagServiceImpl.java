@@ -11,6 +11,7 @@ import com.epam.esm.service.payload.request.TagCreateRequest;
 import java.util.function.Supplier;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -39,6 +40,7 @@ public class TagServiceImpl implements TagService {
   }
 
   @Override
+  @Transactional
   public Tag create(TagCreateRequest request) {
     Tag tag = new Tag(request.getName());
     return tagRepository.save(tag);
