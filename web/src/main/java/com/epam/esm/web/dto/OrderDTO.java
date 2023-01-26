@@ -1,6 +1,7 @@
 package com.epam.esm.web.dto;
 
-import java.time.Instant;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.ZonedDateTime;
 import java.util.Set;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,9 +18,11 @@ public class OrderDTO extends RepresentationModel<OrderDTO> {
 
   private Set<OrderItemDTO> items;
 
-  private Instant creationDate;
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
+  private ZonedDateTime creationDate;
 
   private String lastModifiedBy;
 
-  private Instant lastModifiedDate;
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
+  private ZonedDateTime lastModifiedDate;
 }
