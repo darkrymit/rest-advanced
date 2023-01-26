@@ -1,5 +1,6 @@
 package com.epam.esm.web.exceptions.handler;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.METHOD_NOT_ALLOWED;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -13,6 +14,7 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
@@ -45,6 +47,14 @@ public class GeneralControllerAdvice {
     String message = toLocale(
         "com.epam.esm.exception.NoHandlerFoundException.message");
     GeneralErrorResponse response = new GeneralErrorResponse(NOT_FOUND,message);
+    return getResponseEntity(response);
+  }
+
+  @ExceptionHandler(MethodArgumentNotValidException.class)
+  public ResponseEntity<GeneralErrorResponse> methodArgumentNotValid() {
+    String message = toLocale(
+        "com.epam.esm.exception.MethodArgumentNotValidException.message");
+    GeneralErrorResponse response = new GeneralErrorResponse(BAD_REQUEST,message);
     return getResponseEntity(response);
   }
 
