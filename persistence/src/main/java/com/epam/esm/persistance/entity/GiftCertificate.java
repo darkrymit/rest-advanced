@@ -1,11 +1,15 @@
 package com.epam.esm.persistance.entity;
 
+import com.epam.esm.persistance.dao.support.audit.AuditingEntityListener;
+import com.epam.esm.persistance.dao.support.audit.annotation.CreatedDate;
+import com.epam.esm.persistance.dao.support.audit.annotation.LastModifiedDate;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,6 +38,7 @@ import org.hibernate.Hibernate;
 @ToString
 @RequiredArgsConstructor
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class GiftCertificate {
 
   public static final String TABLE_NAME = "certificates";
@@ -50,8 +55,10 @@ public class GiftCertificate {
   private Integer duration;
 
   @Column(name = "create_date")
+  @CreatedDate
   private Instant createDate;
   @Column(name = "last_update_date")
+  @LastModifiedDate
   private Instant lastUpdateDate;
 
   @ManyToMany

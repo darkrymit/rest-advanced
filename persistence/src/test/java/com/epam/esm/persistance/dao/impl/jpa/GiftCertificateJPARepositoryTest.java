@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.epam.esm.persistance.config.AuditConfig;
 import com.epam.esm.persistance.config.EmbeddedDatabaseJpaConfig;
 import com.epam.esm.persistance.dao.support.page.Pageable;
 import com.epam.esm.persistance.dao.support.specification.Specification;
@@ -24,7 +25,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {EmbeddedDatabaseJpaConfig.class})
+@ContextConfiguration(classes = {EmbeddedDatabaseJpaConfig.class, AuditConfig.class})
 @ActiveProfiles("integration-test")
 @Transactional
 class GiftCertificateJPARepositoryTest {

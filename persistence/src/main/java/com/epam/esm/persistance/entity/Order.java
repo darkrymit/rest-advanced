@@ -1,11 +1,16 @@
 package com.epam.esm.persistance.entity;
 
+import com.epam.esm.persistance.dao.support.audit.AuditingEntityListener;
+import com.epam.esm.persistance.dao.support.audit.annotation.CreatedDate;
+import com.epam.esm.persistance.dao.support.audit.annotation.LastModifiedBy;
+import com.epam.esm.persistance.dao.support.audit.annotation.LastModifiedDate;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,6 +33,7 @@ import org.hibernate.annotations.CascadeType;
 @ToString
 @RequiredArgsConstructor
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class Order {
   @Id
   @Column(unique = true, nullable = false)
@@ -43,12 +49,15 @@ public class Order {
   private Set<OrderItem> items  = new HashSet<>();
 
   @Column(nullable = false,name = "creation_date")
+  @CreatedDate
   private Instant creationDate;
 
   @Column(nullable = false , length = 20,name = "last_modified_by")
+  @LastModifiedBy
   private String lastModifiedBy;
 
   @Column(name = "last_modified_date")
+  @LastModifiedDate
   private Instant lastModifiedDate;
 
   public Order addOrderItem(OrderItem item){

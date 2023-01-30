@@ -1,9 +1,14 @@
 package com.epam.esm.persistance.entity;
 
+import com.epam.esm.persistance.dao.support.audit.AuditingEntityListener;
+import com.epam.esm.persistance.dao.support.audit.annotation.CreatedDate;
+import com.epam.esm.persistance.dao.support.audit.annotation.LastModifiedBy;
+import com.epam.esm.persistance.dao.support.audit.annotation.LastModifiedDate;
 import java.time.Instant;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,6 +27,7 @@ import org.hibernate.Hibernate;
 @ToString
 @RequiredArgsConstructor
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class User {
 
   @Id
@@ -42,12 +48,15 @@ public class User {
   private String lastName;
 
   @Column(name = "creation_date")
+  @CreatedDate
   private Instant creationDate;
 
   @Column(name = "last_modified_by")
+  @LastModifiedBy
   private String lastModifiedBy;
 
   @Column(name = "last_modified_date")
+  @LastModifiedDate
   private Instant lastModifiedDate;
 
   @Override
