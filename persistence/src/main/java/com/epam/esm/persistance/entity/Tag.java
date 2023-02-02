@@ -82,10 +82,6 @@ import org.hibernate.Hibernate;
     resultSetMapping = "BestTagMapping")
 public class Tag {
 
-  public static final String TABLE_NAME = "tags";
-
-  public static final String CERTIFICATES_TAGS_KEYS_TABLE = GiftCertificate.CERTIFICATES_TAGS_KEYS_TABLE;
-
   @Id
   @Column(unique = true, nullable = false)
   @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -41,10 +41,6 @@ import org.hibernate.Hibernate;
 @EntityListeners(AuditingEntityListener.class)
 public class GiftCertificate {
 
-  public static final String TABLE_NAME = "certificates";
-
-  public static final String CERTIFICATES_TAGS_KEYS_TABLE = "certificates_has_tags";
-
   @Id
   @Column(unique = true, nullable = false)
   @GeneratedValue(strategy = GenerationType.IDENTITY)
