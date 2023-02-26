@@ -17,6 +17,7 @@ import com.epam.esm.web.dto.assembler.PagedResourcesAssembler;
 import com.epam.esm.web.dto.assembler.UserModelAssembler;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -67,8 +68,8 @@ public class UserController {
 
   @GetMapping("/me")
   public UserDTO me(
-      @AuthenticationPrincipal org.springframework.security.core.userdetails.User user) {
-    return userModelAssembler.toModel(userService.getByEmail(user.getUsername()));
+      @AuthenticationPrincipal Jwt jwt) {
+    return userModelAssembler.toModel(userService.getByEmail(jwt.getClaim("email")));
   }
 
   @GetMapping("/best-buyer/most-used-tag")

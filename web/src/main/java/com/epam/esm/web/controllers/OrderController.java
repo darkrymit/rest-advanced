@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,9 +33,9 @@ public class OrderController {
 
   @PostMapping
   public ResponseEntity<OrderDTO> createOrder(@Valid @RequestBody OrderCreateRequest request,
-      @AuthenticationPrincipal User user) {
+      @AuthenticationPrincipal Jwt jwt) {
     OrderDTO orderDTO = orderModelAssembler.toModel(
-        orderService.create(request, user.getUsername()));
+        orderService.create(request, jwt.getClaim("email")));
     return ResponseEntity.status(HttpStatus.CREATED)
         .header(HttpHeaders.LOCATION, orderDTO.getLink("self").orElseThrow().toUri().toString())
         .body(orderDTO);
