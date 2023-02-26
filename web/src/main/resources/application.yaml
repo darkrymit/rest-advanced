@@ -1,0 +1,22 @@
+server:
+  port: 8081
+
+logging:
+  level:
+    root: info
+
+spring:
+  profiles:
+    active: dev
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: "jdbc:mysql://localhost:3306/mydb?createDatabaseIfNotExist=true&useUnicode=true&serverTimezone=UTC"
+    username: "root"
+    password: "!Password404!"
+    hikari:
+      maximum-pool-size: 5
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        show_sql: true
