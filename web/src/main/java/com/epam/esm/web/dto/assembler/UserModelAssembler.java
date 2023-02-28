@@ -4,7 +4,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import com.epam.esm.persistance.dao.support.page.Pageable;
-import com.epam.esm.persistance.entity.User;
+import com.epam.esm.service.UserInfo;
 import com.epam.esm.web.controllers.UserController;
 import com.epam.esm.web.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
@@ -15,12 +15,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class UserModelAssembler implements RepresentationModelAssembler<User, UserDTO> {
+public class UserModelAssembler implements RepresentationModelAssembler<UserInfo, UserDTO> {
 
   private final ModelMapper modelMapper;
 
   @Override
-  public UserDTO toModel(User entity) {
+  public UserDTO toModel(UserInfo entity) {
     UserDTO userDTO = modelMapper.map(entity, UserDTO.class);
     userDTO.add(linkTo(methodOn(UserController.class).userById(entity.getId())).withSelfRel());
     userDTO.add(linkTo(
@@ -30,7 +30,7 @@ public class UserModelAssembler implements RepresentationModelAssembler<User, Us
   }
 
   @Override
-  public CollectionModel<UserDTO> toCollectionModel(Iterable<? extends User> entities) {
+  public CollectionModel<UserDTO> toCollectionModel(Iterable<? extends UserInfo> entities) {
     return RepresentationModelAssembler.super.toCollectionModel(entities);
   }
 }

@@ -2,14 +2,13 @@ package com.epam.esm.persistance.dao.impl.jpa;
 
 import com.epam.esm.persistance.dao.UserRepository;
 import com.epam.esm.persistance.entity.User;
-import com.epam.esm.persistance.entity.User_;
-import java.util.Optional;
+import java.util.UUID;
 import javax.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class UserJPARepository extends SimpleJpaRepository<User, Long> implements UserRepository {
+public class UserJPARepository extends SimpleJpaRepository<User, UUID> implements UserRepository {
 
   @Autowired
   public UserJPARepository() {
@@ -21,12 +20,7 @@ public class UserJPARepository extends SimpleJpaRepository<User, Long> implement
   }
 
   @Override
-  protected <S extends User> Long getIdFromEntity(S entity) {
+  protected <S extends User> UUID getIdFromEntity(S entity) {
     return entity.getId();
-  }
-
-  @Override
-  public Optional<User> findByEmail(String email) {
-    return findOne((root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(User_.email), email));
   }
 }

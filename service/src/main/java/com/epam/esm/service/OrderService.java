@@ -5,6 +5,7 @@ import com.epam.esm.persistance.dao.support.page.Pageable;
 import com.epam.esm.persistance.entity.Order;
 import com.epam.esm.service.exceptions.NoSuchOrderException;
 import com.epam.esm.service.payload.request.OrderCreateRequest;
+import java.util.UUID;
 
 
 /**
@@ -25,7 +26,7 @@ public interface OrderService {
    */
   Order getById(long id) throws NoSuchOrderException;
 
-  Order create(OrderCreateRequest request,String userEmail);
+  Order create(OrderCreateRequest request,UUID id);
 
-  Page<Order> getAllByOwnerId(Long id, Pageable pageable);
+  Page<Order> getAllByOwnerId(UUID id, Pageable pageable);
 }

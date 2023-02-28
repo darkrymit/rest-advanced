@@ -3,6 +3,7 @@ package com.epam.esm.web.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.ZonedDateTime;
 import java.util.Set;
+import java.util.UUID;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.hateoas.RepresentationModel;
@@ -14,7 +15,7 @@ import org.springframework.hateoas.server.core.Relation;
 public class OrderDTO extends RepresentationModel<OrderDTO> {
   private Long id;
 
-  private Long ownerId;
+  private UUID ownerId;
 
   private Set<OrderItemDTO> items;
 

@@ -4,6 +4,7 @@ import com.epam.esm.service.OrderService;
 import com.epam.esm.service.payload.request.OrderCreateRequest;
 import com.epam.esm.web.dto.OrderDTO;
 import com.epam.esm.web.dto.assembler.OrderModelAssembler;
+import java.util.UUID;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -35,7 +36,7 @@ public class OrderController {
   public ResponseEntity<OrderDTO> createOrder(@Valid @RequestBody OrderCreateRequest request,
       @AuthenticationPrincipal Jwt jwt) {
     OrderDTO orderDTO = orderModelAssembler.toModel(
-        orderService.create(request, jwt.getClaim("email")));
+        orderService.create(request, UUID.fromString(jwt.getClaim("sub"))));
     return ResponseEntity.status(HttpStatus.CREATED)
         .header(HttpHeaders.LOCATION, orderDTO.getLink("self").orElseThrow().toUri().toString())
         .body(orderDTO);

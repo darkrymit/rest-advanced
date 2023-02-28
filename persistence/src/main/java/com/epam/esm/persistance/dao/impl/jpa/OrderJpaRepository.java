@@ -5,6 +5,8 @@ import com.epam.esm.persistance.dao.support.page.Page;
 import com.epam.esm.persistance.dao.support.page.Pageable;
 import com.epam.esm.persistance.entity.Order;
 import com.epam.esm.persistance.entity.Order_;
+import com.epam.esm.persistance.entity.User_;
+import java.util.UUID;
 import javax.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -28,9 +30,9 @@ public class OrderJpaRepository extends SimpleJpaRepository<Order, Long> impleme
   }
 
   @Override
-  public Page<Order> findAllByOwnerId(Long id, Pageable pageable) {
+  public Page<Order> findAllByOwnerId(UUID id, Pageable pageable) {
     return findAll(
-        (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(Order_.owner), id),
+        (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(Order_.owner).get(User_.id), id),
         pageable);
   }
 }

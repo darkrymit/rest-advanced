@@ -5,9 +5,9 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import com.epam.esm.persistance.dao.support.page.Pageable;
 import com.epam.esm.persistance.entity.Order;
-import com.epam.esm.persistance.entity.User;
 import com.epam.esm.service.OrderService;
 import com.epam.esm.service.TagService;
+import com.epam.esm.service.UserInfo;
 import com.epam.esm.service.UserService;
 import com.epam.esm.web.dto.BestTagDTO;
 import com.epam.esm.web.dto.OrderDTO;
@@ -15,6 +15,7 @@ import com.epam.esm.web.dto.UserDTO;
 import com.epam.esm.web.dto.assembler.OrderModelAssembler;
 import com.epam.esm.web.dto.assembler.PagedResourcesAssembler;
 import com.epam.esm.web.dto.assembler.UserModelAssembler;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -46,7 +47,7 @@ public class UserController {
 
   private final ModelMapper modelMapper;
 
-  private final PagedResourcesAssembler<User> userPagedResourcesAssembler;
+  private final PagedResourcesAssembler<UserInfo> userPagedResourcesAssembler;
 
   private final PagedResourcesAssembler<Order> orderPagedResourcesAssembler;
 
@@ -56,12 +57,12 @@ public class UserController {
   }
 
   @GetMapping("/{id}")
-  public UserDTO userById(@PathVariable Long id) {
+  public UserDTO userById(@PathVariable UUID id) {
     return userModelAssembler.toModel(userService.getById(id));
   }
 
   @GetMapping("/{id}/orders")
-  public PagedModel<OrderDTO> getOrders(@PathVariable Long id, Pageable pageable) {
+  public PagedModel<OrderDTO> getOrders(@PathVariable UUID id, Pageable pageable) {
     return orderPagedResourcesAssembler.toModel(orderService.getAllByOwnerId(id, pageable),
         orderModelAssembler);
   }
@@ -69,7 +70,7 @@ public class UserController {
   @GetMapping("/me")
   public UserDTO me(
       @AuthenticationPrincipal Jwt jwt) {
-    return userModelAssembler.toModel(userService.getByEmail(jwt.getClaim("email")));
+    return userModelAssembler.toModel(userService.getById(UUID.fromString(jwt.getClaim("sub"))));
   }
 
   @GetMapping("/best-buyer/most-used-tag")

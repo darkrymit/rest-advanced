@@ -15,6 +15,7 @@ import com.epam.esm.service.payload.request.OrderCreateRequest;
 import java.time.Instant;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -38,12 +39,12 @@ public class OrderServiceImpl implements OrderService {
 
   @Override
   @Transactional
-  public Order create(OrderCreateRequest request, String userEmail) {
-    User owner = userRepository.findByEmail(userEmail).orElseThrow(
-        () -> new IllegalArgumentException(String.format("Invalid user email %s", userEmail)));
+  public Order create(OrderCreateRequest request, UUID id) {
+    User owner = userRepository.findById(id).orElseThrow(
+        () -> new IllegalArgumentException(String.format("Invalid user id %s", id)));
     List<GiftCertificate> certificateList = giftCertificateRepository.findAllByNames(
         request.getGiftCertificates());
-    Order order = new Order(null, owner, null, Instant.now(), owner.getEmail(), Instant.now());
+    Order order = new Order(null, owner, null, Instant.now(), owner.getId().toString(), Instant.now());
     Set<OrderItem> orderItems = certificateList.stream().map(
             giftCertificate -> new OrderItem(null, order, giftCertificate, giftCertificate.getPrice()))
         .collect(Collectors.toSet());
@@ -52,7 +53,7 @@ public class OrderServiceImpl implements OrderService {
   }
 
   @Override
-  public Page<Order> getAllByOwnerId(Long id, Pageable pageable) {
+  public Page<Order> getAllByOwnerId(UUID id, Pageable pageable) {
     return orderRepository.findAllByOwnerId(id,pageable);
   }
 }

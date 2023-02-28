@@ -2,6 +2,7 @@ package com.epam.esm.web.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.ZonedDateTime;
+import java.util.UUID;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.hateoas.RepresentationModel;
@@ -10,9 +11,9 @@ import org.springframework.hateoas.server.core.Relation;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Relation(collectionRelation = "users", itemRelation = "user")
-public class UserDTO extends RepresentationModel<TagDTO> {
+public class UserDTO extends RepresentationModel<UserDTO> {
 
-  private Long id;
+  private UUID id;
 
   private String email;
 

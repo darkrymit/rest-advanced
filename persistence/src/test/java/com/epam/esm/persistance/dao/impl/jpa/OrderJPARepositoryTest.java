@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -43,8 +44,7 @@ class OrderJPARepositoryTest {
   }
 
   private User getUser() {
-    return new User(1L, "test@gmail.com", "passwordhash", "Tester", "Test", Instant.now(),
-        "test@gmail.com", Instant.now());
+    return new User(UUID.fromString("028fcacb-b19b-4268-9e0c-6d96669b0d5e"), Instant.now());
   }
 
   private OrderItem getOrderItem() {
@@ -56,7 +56,7 @@ class OrderJPARepositoryTest {
   void saveShouldInsertEntryWithGeneratedIdWhenEntryHasIdNull() {
     User creator = getUser();
     OrderItem orderItem = getOrderItem();
-    Order order = new Order(null, creator, new HashSet<>(), Instant.now(), creator.getEmail(),
+    Order order = new Order(null, creator, new HashSet<>(), Instant.now(), creator.getId().toString(),
         Instant.now());
     order.addOrderItem(orderItem);
 
@@ -69,7 +69,7 @@ class OrderJPARepositoryTest {
   void saveShouldInsertOrderItemAlsoWhenOrderHasIdNull() {
     User creator = getUser();
     OrderItem orderItem = getOrderItem();
-    Order order = new Order(null, creator, new HashSet<>(), Instant.now(), creator.getEmail(),
+    Order order = new Order(null, creator, new HashSet<>(), Instant.now(), creator.getId().toString(),
         Instant.now());
     order.addOrderItem(orderItem);
 
@@ -134,8 +134,8 @@ class OrderJPARepositoryTest {
   }
 
   @Test
-  void findAllByOwnerIdShouldReturnPAgeWithContentWhenOwnerHaveOrders() {
+  void findAllByOwnerIdShouldReturnPageWithContentWhenOwnerHaveOrders() {
     Pageable pageable = Pageable.unpaged();
-    assertTrue(orderJpaRepository.findAllByOwnerId(1L,pageable).hasContent());
+    assertTrue(orderJpaRepository.findAllByOwnerId(UUID.fromString("028fcacb-b19b-4268-9e0c-6d96669b0d5e"),pageable).hasContent());
   }
 }

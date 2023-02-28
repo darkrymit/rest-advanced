@@ -1,6 +1,5 @@
 package com.epam.esm.persistance.dao.impl.jpa;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -8,6 +7,7 @@ import com.epam.esm.persistance.config.AuditConfig;
 import com.epam.esm.persistance.config.EmbeddedDatabaseJpaConfig;
 import com.epam.esm.persistance.entity.User;
 import java.time.Instant;
+import java.util.UUID;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,9 +35,8 @@ class UserJPARepositoryTest {
   }
 
   @Test
-  void saveShouldInsertEntryWithGeneratedIdWhenEntryHasIdNull() {
-    User user = new User(null, "test1@gmail.com", "hash", "FirstTest", "LastTest", Instant.now(),
-        "test1@gmail.com", Instant.now());
+  void saveShouldInsertEntryWithIdWhenEntryHasIdNotNull() {
+    User user = new User(UUID.fromString("028fcacb-b19b-4268-9e0c-6d96669bfd5e"), Instant.now());
 
     User savedTag = userJpaRepository.save(user);
 
@@ -45,41 +44,23 @@ class UserJPARepositoryTest {
   }
 
   @Test
-  void saveShouldUpdateEntryWithNewFirstNameWhenEntryExist() {
-    String targetName = "Regular";
-    User user = userJpaRepository.findById(1L).orElseThrow();
-
-    user.setFirstName(targetName);
-
-    userJpaRepository.save(user);
-
-    assertEquals(targetName, userJpaRepository.findById(1L).orElseThrow().getFirstName());
-  }
-
-  @Test
   void findByIdShouldReturnPresentOptionalWhenByExistId() {
-    assertTrue(userJpaRepository.findById(1L).isPresent());
+    assertTrue(userJpaRepository.findById(UUID.fromString("028fcacb-b19b-4268-9e0c-6d96669b0d5e")).isPresent());
 
   }
   @Test
   void findByIdShouldReturnEmptyOptionalWhenByNonExistId() {
-    assertTrue(userJpaRepository.findById(-404L).isEmpty());
-  }
-
-  @Test
-  void findByEmailShouldReturnPresentOptionalWhenByExistEmail() {
-    assertTrue(userJpaRepository.findByEmail("test@gmail.com").isPresent());
-
+    assertTrue(userJpaRepository.findById(UUID.fromString("404fcacb-b19b-4268-9e0c-6d96669b0d6e")).isEmpty());
   }
 
   @Test
   void existsByIdShouldReturnTrueWhenByExistId() {
-    assertTrue(userJpaRepository.existsById(1L));
+    assertTrue(userJpaRepository.existsById(UUID.fromString("028fcacb-b19b-4268-9e0c-6d96669b0d5e")));
   }
 
   @Test
   void existsByIdShouldReturnFalseWhenByNonExistId() {
-    assertFalse(userJpaRepository.existsById(-404L));
+    assertFalse(userJpaRepository.existsById(UUID.fromString("404fcacb-b19b-4268-9e0c-6d96669b0d6e")));
   }
 
   @Test
@@ -89,16 +70,16 @@ class UserJPARepositoryTest {
 
   @Test
   void deleteShouldDeleteEntryWhenEntryExists() {
-    User user = userJpaRepository.findById(1L).orElseThrow();
+    User user = userJpaRepository.findById(UUID.fromString("028fcacb-b19b-4268-9e0c-6d96669b0d5e")).orElseThrow();
 
     userJpaRepository.delete(user);
 
-    assertFalse(userJpaRepository.existsById(1L));
+    assertFalse(userJpaRepository.existsById(UUID.fromString("028fcacb-b19b-4268-9e0c-6d96669b0d5e")));
   }
 
   @Test
   void deleteShouldNotDeleteAllEntryWhenEntryExists() {
-    User user = userJpaRepository.findById(1L).orElseThrow();
+    User user = userJpaRepository.findById(UUID.fromString("028fcacb-b19b-4268-9e0c-6d96669b0d5e")).orElseThrow();
 
     userJpaRepository.delete(user);
 

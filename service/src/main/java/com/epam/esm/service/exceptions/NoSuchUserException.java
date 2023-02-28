@@ -1,5 +1,7 @@
 package com.epam.esm.service.exceptions;
 
+import java.util.UUID;
+
 /**
  * Thrown by various methods to indicate that the {@link com.epam.esm.persistance.entity.User} entity being requested does not exist.
  * @author Tamerlan Hurbanov
@@ -7,28 +9,28 @@ package com.epam.esm.service.exceptions;
  * @since  1.0
  */
 public class NoSuchUserException extends RuntimeException {
-  private final Long id;
+  private final UUID id;
 
-  public NoSuchUserException(Long id) {
+  public NoSuchUserException(UUID id) {
     this.id = id;
   }
 
-  public NoSuchUserException(String s, Throwable cause, Long id) {
+  public NoSuchUserException(String s, Throwable cause, UUID id) {
     super(s, cause);
     this.id = id;
   }
 
-  public NoSuchUserException(Throwable cause, Long id) {
+  public NoSuchUserException(Throwable cause, UUID id) {
     super(cause);
     this.id = id;
   }
 
-  public NoSuchUserException(String s, Long id) {
+  public NoSuchUserException(String s, UUID id) {
     super(s);
     this.id = id;
   }
 
-  public Long getId() {
+  public UUID getId() {
     return id;
   }
 }

@@ -1,6 +1,7 @@
 package com.epam.esm.web.dto;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.hateoas.RepresentationModel;
@@ -12,7 +13,7 @@ public class BestTagDTO extends RepresentationModel<BestTagDTO> {
   private Long id;
   private String name;
   private Long occurrences;
-  private Long ownerId;
+  private UUID ownerId;
   private BigDecimal totalPrice;
 
 }

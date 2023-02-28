@@ -2,15 +2,13 @@ package com.epam.esm.persistance.entity;
 
 import com.epam.esm.persistance.dao.support.audit.AuditingEntityListener;
 import com.epam.esm.persistance.dao.support.audit.annotation.CreatedDate;
-import com.epam.esm.persistance.dao.support.audit.annotation.LastModifiedBy;
-import com.epam.esm.persistance.dao.support.audit.annotation.LastModifiedDate;
 import java.time.Instant;
 import java.util.Objects;
+import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -19,6 +17,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "users")
@@ -31,33 +31,14 @@ import org.hibernate.Hibernate;
 public class User {
 
   @Id
-  @Column(unique = true, nullable = false)
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
-
-  @Column(nullable = false, unique = true)
-  private String email;
-
-  @Column(nullable = false, length = 256)
-  private String password;
-
-  @Column(nullable = false, length = 20)
-  private String firstName;
-
-  @Column(nullable = false, length = 20)
-  private String lastName;
+  @GeneratedValue(generator = "uuid2")
+  @GenericGenerator(name = "uuid2", strategy = "uuid2")
+  @Type(type = "org.hibernate.type.UUIDCharType")
+  private UUID id;
 
   @Column(name = "creation_date")
   @CreatedDate
   private Instant creationDate;
-
-  @Column(name = "last_modified_by")
-  @LastModifiedBy
-  private String lastModifiedBy;
-
-  @Column(name = "last_modified_date")
-  @LastModifiedDate
-  private Instant lastModifiedDate;
 
   @Override
   public boolean equals(Object o) {

@@ -14,6 +14,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -30,8 +31,7 @@ class OrderServiceImplTest {
   OrderServiceImpl orderService;
 
   private User getUser() {
-    return new User(1L, "test1@gmail.com", "hash", "FirstTest", "LastTest", Instant.now(),
-        "test1@gmail.com", Instant.now());
+    return new User(UUID.fromString("028fcacb-b19b-4268-9e0c-6d96669b0d5e"), Instant.now());
   }
 
   private GiftCertificate getGiftCertificate() {
@@ -44,7 +44,7 @@ class OrderServiceImplTest {
   }
 
   private Order getOrder(User owner) {
-    Order order = new Order(1L, owner, Set.of(), Instant.now(), owner.getEmail(),
+    Order order = new Order(1L, owner, Set.of(), Instant.now(), owner.getId().toString(),
         Instant.now());
     order.setItems(Set.of(new OrderItem(1L, order, getGiftCertificate(), BigDecimal.TEN)));
     return order;

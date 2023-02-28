@@ -9,19 +9,15 @@ VALUES ('tagName4');
 INSERT INTO tags (`name`)
 VALUES ('tagName2');
 
-INSERT INTO users (email, `password`, firstName, lastName, creation_date,
-                   last_modified_by, last_modified_date)
-VALUES ('test@gmail.com', 'passwordhash', 'Tester', 'Test', '2020-08-29T06:12:15.156',
-        'test@gmail.com', '2020-08-29T06:12:15.156');
-INSERT INTO users (email, `password`, firstName, lastName, creation_date,
-                   last_modified_by, last_modified_date)
-VALUES ('test2@gmail.com', 'passwordhash', 'Tester2', 'Test2', '2019-08-29T06:12:15.156',
-        'test2@gmail.com', '2019-08-29T06:12:15.156');
+INSERT INTO users (id,creation_date)
+VALUES ('028fcacb-b19b-4268-9e0c-6d96669b0d5e', '2020-08-29T06:12:15.156');
+INSERT INTO users (id,creation_date)
+VALUES ('01e5aa8b-52ef-45ac-bc27-d5ae60dd9481', '2019-08-29T06:12:15.156');
 
 INSERT INTO orders (owner_id, creation_date, last_modified_by, last_modified_date)
-VALUES (1, '2020-09-29T06:12:15.156', 'test@gmail.com', '2020-09-29T06:12:15.156');
+VALUES ('028fcacb-b19b-4268-9e0c-6d96669b0d5e', '2020-09-29T06:12:15.156', 'test@gmail.com', '2020-09-29T06:12:15.156');
 INSERT INTO orders (owner_id, creation_date, last_modified_by, last_modified_date)
-VALUES (1, '2020-10-29T06:12:15.156', 'test@gmail.com', '2020-10-29T06:12:15.156');
+VALUES ('028fcacb-b19b-4268-9e0c-6d96669b0d5e', '2020-10-29T06:12:15.156', 'test@gmail.com', '2020-10-29T06:12:15.156');
 
 INSERT INTO order_items (order_id, gift_certificate_id, price)
 VALUES (1, 1,200.0);

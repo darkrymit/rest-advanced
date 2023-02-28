@@ -3,6 +3,7 @@ package com.epam.esm.persistance.entity;
 import com.epam.esm.persistance.projection.BestTag;
 import java.math.BigDecimal;
 import java.util.Objects;
+import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.ColumnResult;
 import javax.persistence.ConstructorResult;
@@ -41,7 +42,7 @@ import org.hibernate.Hibernate;
         columns = {@ColumnResult(name = "id", type = Long.class),//
             @ColumnResult(name = "name", type = String.class),//
             @ColumnResult(name = "occurrences", type = Long.class),//
-            @ColumnResult(name = "owner_id", type = Long.class),//
+            @ColumnResult(name = "owner_id", type = UUID.class),//
             @ColumnResult(name = "total_price", type = BigDecimal.class),//
         }//
     )//
