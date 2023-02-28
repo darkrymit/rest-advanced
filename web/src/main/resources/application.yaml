@@ -24,6 +24,19 @@ spring:
 ####### resource server configuration properties
   security:
     oauth2:
+
       resourceserver:
         jwt:
           issuer-uri: http://localhost:8080/realms/oauth2-realm
+
+      client:
+        registration:
+          keycloak:
+            client-id: user-rs
+            client-secret: pvPxOeuMoW2eJraXIFzqP8A8sMSs8KFw
+            authorization-grant-type: client_credentials
+            client-authentication-method: client_secret_basic
+            scope: openid
+        provider:
+          keycloak:
+            token-uri: "http://localhost:8080/realms/oauth2-realm/protocol/openid-connect/token"
