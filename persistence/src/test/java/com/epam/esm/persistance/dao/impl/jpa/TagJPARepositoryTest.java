@@ -4,41 +4,26 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.epam.esm.persistance.config.AuditConfig;
-import com.epam.esm.persistance.config.EmbeddedDatabaseJpaConfig;
-import com.epam.esm.persistance.dao.support.Sort;
-import com.epam.esm.persistance.dao.support.Sort.Direction;
-import com.epam.esm.persistance.dao.support.Sort.Order;
-import com.epam.esm.persistance.dao.support.page.Page;
-import com.epam.esm.persistance.dao.support.page.PageRequest;
-import com.epam.esm.persistance.dao.support.page.Pageable;
+import com.epam.esm.persistance.dao.TagRepository;
 import com.epam.esm.persistance.entity.Tag;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {EmbeddedDatabaseJpaConfig.class, AuditConfig.class})
-@ActiveProfiles("integration-test")
-@Transactional
+@DataJpaTest
 class TagJPARepositoryTest {
 
-  @PersistenceContext
-  EntityManager entityManager;
 
-  TagJPARepository tagJPARepository;
+  @Autowired
+  TagRepository tagJPARepository;
 
-  @BeforeEach
-  void setUp() {
-    tagJPARepository = new TagJPARepository(entityManager);
-  }
 
   @Test
   void saveShouldInsertEntryWithGeneratedIdWhenEntryHasIdNull() {
@@ -83,7 +68,7 @@ class TagJPARepositoryTest {
 
   @Test
   void findAllAsListShouldReturnNonEmptyListWhenCertificatesEntryExists() {
-    assertFalse(tagJPARepository.findAllAsList().isEmpty());
+    assertFalse(tagJPARepository.findAll().isEmpty());
   }
 
   @Test
@@ -126,7 +111,7 @@ class TagJPARepositoryTest {
 
   @Test
   void findAllShouldReturnPageWithContentWhenByPageableWithNoOffsetAndSortByNameDesc() {
-    Pageable pageable = PageRequest.of(0, 2, new Sort(List.of(new Order("name", Direction.DESC))));
+    Pageable pageable = PageRequest.of(0, 2, Sort.by(List.of(new Order(Direction.DESC, "name"))));
     assertTrue(tagJPARepository.findAll(pageable).hasContent());
   }
 
@@ -145,7 +130,7 @@ class TagJPARepositoryTest {
 
     tagJPARepository.delete(tag);
 
-    assertFalse(tagJPARepository.findAllAsList().isEmpty());
+    assertFalse(tagJPARepository.findAll().isEmpty());
   }
 
   @Test

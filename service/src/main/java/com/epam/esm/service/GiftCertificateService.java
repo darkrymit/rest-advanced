@@ -1,8 +1,6 @@
 package com.epam.esm.service;
 
 
-import com.epam.esm.persistance.dao.support.page.Page;
-import com.epam.esm.persistance.dao.support.page.Pageable;
 import com.epam.esm.persistance.entity.GiftCertificate;
 import com.epam.esm.persistance.entity.Tag;
 import com.epam.esm.service.exceptions.NoSuchGiftCertificateException;
@@ -10,6 +8,8 @@ import com.epam.esm.service.payload.request.GiftCertificateCreateRequest;
 import com.epam.esm.service.payload.request.GiftCertificatePriceUpdateRequest;
 import com.epam.esm.service.payload.request.GiftCertificateSearchRequest;
 import com.epam.esm.service.payload.request.GiftCertificateUpdateRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 /**
  * Interface describes business logic for working with {@link GiftCertificate} entity.

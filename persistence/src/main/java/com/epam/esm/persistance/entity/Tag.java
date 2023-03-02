@@ -47,7 +47,7 @@ import org.hibernate.Hibernate;
         }//
     )//
 )//
-@NamedNativeQuery(name = "findMostUsedTagForBestBuyer", //
+@NamedNativeQuery(name = "Tag.findMostUsedTagForBestBuyer", //
     query = "SELECT  "//
         + "    t.id, "//
         + "    t.name, "//

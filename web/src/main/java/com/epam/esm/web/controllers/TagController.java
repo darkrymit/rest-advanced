@@ -1,15 +1,15 @@
 package com.epam.esm.web.controllers;
 
-import com.epam.esm.persistance.dao.support.page.Pageable;
+import org.springframework.data.domain.Pageable;
 import com.epam.esm.persistance.entity.Tag;
 import com.epam.esm.service.TagService;
 import com.epam.esm.service.payload.request.TagCreateRequest;
 import com.epam.esm.web.dto.TagDTO;
-import com.epam.esm.web.dto.assembler.PagedResourcesAssembler;
 import com.epam.esm.web.dto.assembler.TagModelAssembler;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

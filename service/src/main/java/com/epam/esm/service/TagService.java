@@ -1,11 +1,11 @@
 package com.epam.esm.service;
 
-import com.epam.esm.persistance.dao.support.page.Page;
-import com.epam.esm.persistance.dao.support.page.Pageable;
 import com.epam.esm.persistance.entity.Tag;
 import com.epam.esm.persistance.projection.BestTag;
 import com.epam.esm.service.exceptions.NoSuchTagException;
 import com.epam.esm.service.payload.request.TagCreateRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 
 /**

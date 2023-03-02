@@ -13,9 +13,6 @@ import static org.mockito.Mockito.when;
 
 import com.epam.esm.persistance.dao.GiftCertificateRepository;
 import com.epam.esm.persistance.dao.TagRepository;
-import com.epam.esm.persistance.dao.support.page.PageImpl;
-import com.epam.esm.persistance.dao.support.page.Pageable;
-import com.epam.esm.persistance.dao.support.specification.Specification;
 import com.epam.esm.persistance.entity.GiftCertificate;
 import com.epam.esm.persistance.entity.Tag;
 import com.epam.esm.service.impl.handler.GiftCertificateUpdateHandler;
@@ -34,6 +31,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer1;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 
 @ExtendWith(MockitoExtension.class)
 class GiftCertificateServiceImplTest {
@@ -92,7 +92,7 @@ class GiftCertificateServiceImplTest {
     Pageable pageable = Pageable.unpaged();
 
     when(giftCertificateRepository.findAll(
-        argThat(spec -> !Specification.emptySpecification().equals(spec)),
+        (Specification<GiftCertificate>) argThat(spec -> !Specification.where(null).equals(spec)),
         (Pageable) argThat(arg -> arg.equals(pageable)))).thenReturn(
         new PageImpl<>(giftCertificates));
 

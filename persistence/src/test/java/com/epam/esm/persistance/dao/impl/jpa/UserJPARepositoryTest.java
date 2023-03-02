@@ -3,36 +3,21 @@ package com.epam.esm.persistance.dao.impl.jpa;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.epam.esm.persistance.config.AuditConfig;
-import com.epam.esm.persistance.config.EmbeddedDatabaseJpaConfig;
+import com.epam.esm.persistance.dao.UserRepository;
 import com.epam.esm.persistance.entity.User;
 import java.time.Instant;
 import java.util.UUID;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {EmbeddedDatabaseJpaConfig.class, AuditConfig.class})
-@ActiveProfiles("integration-test")
-@Transactional
+@DataJpaTest
 class UserJPARepositoryTest {
 
-  @PersistenceContext
-  EntityManager entityManager;
-
-  UserJPARepository userJpaRepository;
-
-  @BeforeEach
-  void setUp() {
-    userJpaRepository = new UserJPARepository(entityManager);
-  }
+  @Autowired
+  UserRepository userJpaRepository;
 
   @Test
   void saveShouldInsertEntryWithIdWhenEntryHasIdNotNull() {
@@ -65,7 +50,7 @@ class UserJPARepositoryTest {
 
   @Test
   void findAllAsListShouldReturnNonEmptyListWhenCertificatesEntryExists() {
-    assertFalse(userJpaRepository.findAllAsList().isEmpty());
+    assertFalse(userJpaRepository.findAll().isEmpty());
   }
 
   @Test
@@ -83,6 +68,6 @@ class UserJPARepositoryTest {
 
     userJpaRepository.delete(user);
 
-    assertFalse(userJpaRepository.findAllAsList().isEmpty());
+    assertFalse(userJpaRepository.findAll().isEmpty());
   }
 }

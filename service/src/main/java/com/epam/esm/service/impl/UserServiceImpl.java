@@ -1,8 +1,6 @@
 package com.epam.esm.service.impl;
 
 import com.epam.esm.persistance.dao.UserRepository;
-import com.epam.esm.persistance.dao.support.page.Page;
-import com.epam.esm.persistance.dao.support.page.Pageable;
 import com.epam.esm.persistance.entity.User;
 import com.epam.esm.service.UserInfo;
 import com.epam.esm.service.UserOAuthDetails;
@@ -12,7 +10,8 @@ import com.epam.esm.service.exceptions.NoSuchUserException;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {

@@ -1,6 +1,6 @@
 package com.epam.esm.web.controllers;
 
-import com.epam.esm.persistance.dao.support.page.Pageable;
+import org.springframework.data.domain.Pageable;
 import com.epam.esm.persistance.entity.GiftCertificate;
 import com.epam.esm.service.GiftCertificateService;
 import com.epam.esm.service.payload.request.GiftCertificateCreateRequest;
@@ -9,10 +9,10 @@ import com.epam.esm.service.payload.request.GiftCertificateSearchRequest;
 import com.epam.esm.service.payload.request.GiftCertificateUpdateRequest;
 import com.epam.esm.web.dto.GiftCertificateDTO;
 import com.epam.esm.web.dto.assembler.GiftCertificateModelAssembler;
-import com.epam.esm.web.dto.assembler.PagedResourcesAssembler;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

@@ -1,22 +1,23 @@
 package com.epam.esm.persistance.dao;
 
-import com.epam.esm.persistance.dao.support.SimpleCrudRepository;
-import com.epam.esm.persistance.dao.support.page.PagingRepository;
 import com.epam.esm.persistance.entity.Tag;
 import com.epam.esm.persistance.projection.BestTag;
 import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 /**
- * Interface that extends {@link PagingRepository} and parametrizes according
+ * Interface that extends {@link JpaRepository} and parametrizes according
  * to {@link Tag} entity.
  *
  * @author Tamerlan Hurbanov
- * @see SimpleCrudRepository
- * @see PagingRepository
+ * @see JpaRepository
  * @see Tag
  * @since 1.0
  */
-public interface TagRepository extends PagingRepository<Tag, Long> {
+@Repository
+public interface TagRepository extends JpaRepository<Tag, Long> {
 
   /**
    * Retrieves an entity by its name field.
@@ -26,5 +27,6 @@ public interface TagRepository extends PagingRepository<Tag, Long> {
    */
   Optional<Tag> findByName(String name);
 
+  @Query(nativeQuery = true)
   Optional<BestTag> findMostUsedTagForBestBuyer();
 }

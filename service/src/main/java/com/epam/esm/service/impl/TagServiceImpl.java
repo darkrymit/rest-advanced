@@ -1,8 +1,8 @@
 package com.epam.esm.service.impl;
 
 import com.epam.esm.persistance.dao.TagRepository;
-import com.epam.esm.persistance.dao.support.page.Page;
-import com.epam.esm.persistance.dao.support.page.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import com.epam.esm.persistance.entity.Tag;
 import com.epam.esm.persistance.projection.BestTag;
 import com.epam.esm.service.TagService;

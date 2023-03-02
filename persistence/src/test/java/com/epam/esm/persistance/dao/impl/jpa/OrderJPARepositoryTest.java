@@ -4,9 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.epam.esm.persistance.config.AuditConfig;
-import com.epam.esm.persistance.config.EmbeddedDatabaseJpaConfig;
-import com.epam.esm.persistance.dao.support.page.Pageable;
+import com.epam.esm.persistance.dao.OrderRepository;
 import com.epam.esm.persistance.entity.GiftCertificate;
 import com.epam.esm.persistance.entity.Order;
 import com.epam.esm.persistance.entity.OrderItem;
@@ -17,38 +15,28 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.data.domain.Pageable;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {EmbeddedDatabaseJpaConfig.class, AuditConfig.class})
-@ActiveProfiles("integration-test")
-@Transactional
+@DataJpaTest
 class OrderJPARepositoryTest {
 
-  @PersistenceContext
-  EntityManager entityManager;
+  @Autowired
+  TestEntityManager testEntityManager;
 
-  OrderJpaRepository orderJpaRepository;
+  @Autowired
+  OrderRepository orderJpaRepository;
 
-  @BeforeEach
-  void setUp() {
-    orderJpaRepository = new OrderJpaRepository(entityManager);
-  }
 
   private User getUser() {
     return new User(UUID.fromString("028fcacb-b19b-4268-9e0c-6d96669b0d5e"), Instant.now());
   }
 
   private OrderItem getOrderItem() {
-    return new OrderItem(null, null, entityManager.getReference(GiftCertificate.class, 1L),
+    return new OrderItem(null, null, testEntityManager.getEntityManager().getReference(GiftCertificate.class, 1L),
         BigDecimal.TEN);
   }
 
@@ -112,7 +100,7 @@ class OrderJPARepositoryTest {
 
   @Test
   void findAllAsListShouldReturnNonEmptyListWhenCertificatesEntryExists() {
-    assertFalse(orderJpaRepository.findAllAsList().isEmpty());
+    assertFalse(orderJpaRepository.findAll().isEmpty());
   }
 
   @Test
@@ -130,7 +118,7 @@ class OrderJPARepositoryTest {
 
     orderJpaRepository.delete(order);
 
-    assertFalse(orderJpaRepository.findAllAsList().isEmpty());
+    assertFalse(orderJpaRepository.findAll().isEmpty());
   }
 
   @Test

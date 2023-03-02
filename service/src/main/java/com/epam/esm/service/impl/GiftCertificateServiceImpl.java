@@ -2,9 +2,6 @@ package com.epam.esm.service.impl;
 
 import com.epam.esm.persistance.dao.GiftCertificateRepository;
 import com.epam.esm.persistance.dao.TagRepository;
-import com.epam.esm.persistance.dao.support.page.Page;
-import com.epam.esm.persistance.dao.support.page.Pageable;
-import com.epam.esm.persistance.dao.support.specification.Specification;
 import com.epam.esm.persistance.entity.GiftCertificate;
 import com.epam.esm.persistance.entity.GiftCertificate_;
 import com.epam.esm.persistance.entity.Tag;
@@ -22,6 +19,9 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,7 +52,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
       GiftCertificateSearchRequest searchRequest) {
     List<String> tags = searchRequest.getTags();
     return tags.stream().map(GiftCertificateServiceImpl::getTagSpecification)
-        .reduce(Specification.emptySpecification(), Specification::and);
+        .reduce(Specification.where(null), Specification::and);
   }
 
   private static Specification<GiftCertificate> getTagSpecification(String tag) {
@@ -62,7 +62,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
   @Override
   public Page<GiftCertificate> findAll(GiftCertificateSearchRequest searchRequest,
       Pageable pageable) {
-    Specification<GiftCertificate> specification = Specification.emptySpecification();
+    Specification<GiftCertificate> specification = Specification.where(null);
 
     if (searchRequest.isTagsPresent()) {
       specification = specification.and(getTagsSpecification(searchRequest));

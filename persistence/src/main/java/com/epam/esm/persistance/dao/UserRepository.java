@@ -1,8 +1,10 @@
 package com.epam.esm.persistance.dao;
 
-import com.epam.esm.persistance.dao.support.page.PagingRepository;
 import com.epam.esm.persistance.entity.User;
 import java.util.UUID;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface UserRepository extends PagingRepository<User, UUID> {
+@Repository
+public interface UserRepository extends JpaRepository<User, UUID> {
 }

@@ -1,11 +1,12 @@
 package com.epam.esm.service;
 
-import com.epam.esm.persistance.dao.support.page.Page;
-import com.epam.esm.persistance.dao.support.page.Pageable;
+
 import com.epam.esm.persistance.entity.Order;
 import com.epam.esm.service.exceptions.NoSuchOrderException;
 import com.epam.esm.service.payload.request.OrderCreateRequest;
 import java.util.UUID;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 
 /**
