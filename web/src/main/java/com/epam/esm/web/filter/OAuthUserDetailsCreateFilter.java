@@ -30,7 +30,7 @@ public class OAuthUserDetailsCreateFilter extends OncePerRequestFilter {
     if (!(authentication instanceof JwtAuthenticationToken)) {
       filterChain.doFilter(request, response);
     }
-    log.info("OAuthUserDetailsCreateFilter start analyze");
+    log.trace("OAuthUserDetailsCreateFilter start analyze");
     JwtAuthenticationToken jwtAuthenticationToken = (JwtAuthenticationToken) authentication;
     UUID uuid = UUID.fromString(jwtAuthenticationToken.getName());
 

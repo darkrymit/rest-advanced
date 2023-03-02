@@ -33,12 +33,14 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @AllArgsConstructor
 public class SecurityConfig {
 
   OAuthUserDetailsCreateFilter oAuthUserDetailsCreateFilter;
+
+  KeycloakWebClientProperties keycloakWebClientProperties;
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -78,8 +80,8 @@ public class SecurityConfig {
   WebClient webClient(OAuth2AuthorizedClientManager authorizedClientManager) {
     ServletOAuth2AuthorizedClientExchangeFilterFunction oauth2Client = new ServletOAuth2AuthorizedClientExchangeFilterFunction(
         authorizedClientManager);
-    oauth2Client.setDefaultClientRegistrationId("keycloak");
-    return WebClient.builder().baseUrl("http://localhost:8080/admin/realms/oauth2-realm")
+    oauth2Client.setDefaultClientRegistrationId(keycloakWebClientProperties.getRegistrationId());
+    return WebClient.builder().baseUrl(keycloakWebClientProperties.getUrl())
         .apply(oauth2Client.oauth2Configuration()).build();
   }
 
