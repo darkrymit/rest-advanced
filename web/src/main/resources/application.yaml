@@ -40,3 +40,8 @@ spring:
         provider:
           keycloak:
             token-uri: "http://localhost:8080/realms/oauth2-realm/protocol/openid-connect/token"
+
+keycloak:
+  webclient:
+    registrationId: "keycloak"
+    url: "http://localhost:8080/admin/realms/oauth2-realm"
