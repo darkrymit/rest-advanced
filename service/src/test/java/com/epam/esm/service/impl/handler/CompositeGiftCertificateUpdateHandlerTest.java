@@ -7,7 +7,7 @@ import com.epam.esm.persistance.entity.Tag;
 import com.epam.esm.service.config.GiftCertificateUpdateHandlerTestConfig;
 import com.epam.esm.service.payload.request.GiftCertificateUpdateRequest;
 import java.math.BigDecimal;
-import java.time.ZonedDateTime;
+import java.time.Instant;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,7 +24,7 @@ class CompositeGiftCertificateUpdateHandlerTest {
 
   private GiftCertificate getGiftCertificate() {
     return new GiftCertificate(4L, "second", "Second grade", BigDecimal.valueOf(40), 2,
-        ZonedDateTime.now(), ZonedDateTime.now(), getTags());
+        Instant.now(), Instant.now(), getTags());
   }
 
   private List<Tag> getTags() {
