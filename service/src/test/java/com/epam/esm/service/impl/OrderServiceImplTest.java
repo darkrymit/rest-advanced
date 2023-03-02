@@ -54,9 +54,10 @@ class OrderServiceImplTest {
   void getByIdShouldReturnNonNullWhenByExistingId() {
     User owner = getUser();
     Order preparedOrder = getOrder(owner);
+    UUID uuid = UUID.randomUUID();
 
     when(orderRepository.findById(preparedOrder.getId())).thenReturn(Optional.of(preparedOrder));
 
-    assertNotNull(orderService.getById(1L));
+    assertNotNull(orderService.getById(1L,uuid));
   }
 }

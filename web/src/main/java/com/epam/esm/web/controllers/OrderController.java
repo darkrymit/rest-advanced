@@ -43,8 +43,8 @@ public class OrderController {
   }
 
   @GetMapping("/{id}")
-  public OrderDTO orderById(@PathVariable Long id) {
-    return orderModelAssembler.toModel(orderService.getById(id));
+  public OrderDTO orderById(@PathVariable Long id,@AuthenticationPrincipal Jwt jwt) {
+    return orderModelAssembler.toModel(orderService.getById(id,UUID.fromString(jwt.getClaim("sub"))));
   }
 
 }

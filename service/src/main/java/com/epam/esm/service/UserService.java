@@ -4,6 +4,7 @@ import com.epam.esm.service.exceptions.NoSuchUserException;
 import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 
 /**
@@ -20,6 +21,7 @@ public interface UserService {
    *
    * @return {@link Page} of {@link UserInfo} by {@link Pageable}
    */
+  @PreAuthorize("hasAnyRole('Administrator')")
   Page<UserInfo> findAll(Pageable pageable);
 
   /**
@@ -29,5 +31,6 @@ public interface UserService {
    * @return entity with given id
    * @throws NoSuchUserException if there is no entity by given id
    */
+  @PreAuthorize("hasRole('Administrator') || @seh.hasSameId(#id)")
   UserInfo getById(UUID id) throws NoSuchUserException;
 }

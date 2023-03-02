@@ -6,6 +6,7 @@ import com.epam.esm.service.exceptions.NoSuchTagException;
 import com.epam.esm.service.payload.request.TagCreateRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 
 /**
@@ -41,6 +42,7 @@ public interface TagService {
    * @param id id of requested entity
    * @throws NoSuchTagException if there is no entity by given id
    */
+  @PreAuthorize("hasAnyRole('Administrator')")
   void deleteById(long id);
 
   /**
@@ -51,5 +53,6 @@ public interface TagService {
    */
   Tag create(TagCreateRequest request);
 
+  @PreAuthorize("hasAnyRole('Administrator')")
   BestTag getMostUsedTagForBestBuyer();
 }

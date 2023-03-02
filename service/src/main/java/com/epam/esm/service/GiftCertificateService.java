@@ -10,6 +10,7 @@ import com.epam.esm.service.payload.request.GiftCertificateSearchRequest;
 import com.epam.esm.service.payload.request.GiftCertificateUpdateRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 /**
  * Interface describes business logic for working with {@link GiftCertificate} entity.
@@ -48,6 +49,7 @@ public interface GiftCertificateService {
    * @param id id of requested entity
    * @throws NoSuchGiftCertificateException if there is no entity by given id
    */
+  @PreAuthorize("hasAnyRole('Administrator')")
   void deleteById(long id) throws NoSuchGiftCertificateException;
 
   /**
@@ -57,6 +59,7 @@ public interface GiftCertificateService {
    * @param request request containing all required data to create entity
    * @return entity created by given request
    */
+  @PreAuthorize("hasAnyRole('Administrator')")
   GiftCertificate create(GiftCertificateCreateRequest request);
 
   /**
@@ -68,6 +71,7 @@ public interface GiftCertificateService {
    * @return entity updated by given request
    * @throws NoSuchGiftCertificateException if there is no entity by given id
    */
+  @PreAuthorize("hasAnyRole('Administrator')")
   GiftCertificate update(long id, GiftCertificateUpdateRequest updateRequest)
       throws NoSuchGiftCertificateException;
 
@@ -79,5 +83,6 @@ public interface GiftCertificateService {
    * @return entity updated by given request
    * @throws NoSuchGiftCertificateException if there is no entity by given id
    */
+  @PreAuthorize("hasAnyRole('Administrator')")
   GiftCertificate update(long id, GiftCertificatePriceUpdateRequest updateRequest);
 }

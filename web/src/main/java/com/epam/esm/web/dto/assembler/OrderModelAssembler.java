@@ -22,7 +22,7 @@ public class OrderModelAssembler implements RepresentationModelAssembler<Order, 
   @Override
   public OrderDTO toModel(Order entity) {
     OrderDTO orderDTO = modelMapper.map(entity, OrderDTO.class);
-    Link selfLink = linkTo(methodOn(OrderController.class).orderById(entity.getId())).withSelfRel();
+    Link selfLink = linkTo(methodOn(OrderController.class).orderById(entity.getId(),null)).withSelfRel();
     orderDTO.add(selfLink);
     return orderDTO;
   }

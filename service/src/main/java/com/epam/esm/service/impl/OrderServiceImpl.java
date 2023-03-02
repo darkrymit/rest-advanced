@@ -33,8 +33,8 @@ public class OrderServiceImpl implements OrderService {
 
   @Override
   @Transactional
-  public Order getById(long id) throws NoSuchOrderException {
-    return orderRepository.findById(id).orElseThrow(() -> new NoSuchOrderException(id));
+  public Order getById(long orderId,UUID userId) throws NoSuchOrderException {
+    return orderRepository.findById(orderId).orElseThrow(() -> new NoSuchOrderException(orderId));
   }
 
   @Override

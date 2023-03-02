@@ -1,6 +1,7 @@
 package com.epam.esm.web.exceptions.handler;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.METHOD_NOT_ALLOWED;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -13,6 +14,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -30,6 +32,12 @@ public class GeneralControllerAdvice {
     String message = toLocale("com.epam.esm.exception.DataAccessException.message");
 
     return getResponseEntity(new GeneralErrorResponse(INTERNAL_SERVER_ERROR, message));
+  }
+
+  @ExceptionHandler(AccessDeniedException.class)
+  public final ResponseEntity<GeneralErrorResponse> handleAccessDeniedException() {
+    String message = toLocale("com.epam.esm.exception.AccessDeniedException.message");
+    return getResponseEntity(new GeneralErrorResponse(FORBIDDEN, message));
   }
 
   @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
