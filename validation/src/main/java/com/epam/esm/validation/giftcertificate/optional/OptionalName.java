@@ -12,7 +12,7 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 import org.hibernate.validator.constraints.Length;
 
-@Length(min = 4,max = 80)
+@Length(min = 3,max = 80)
 @Documented
 @Constraint(validatedBy = {})
 @Target({ElementType.TYPE_USE, METHOD, FIELD})
