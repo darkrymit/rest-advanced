@@ -29,6 +29,7 @@ public class OAuthUserDetailsCreateFilter extends OncePerRequestFilter {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     if (!(authentication instanceof JwtAuthenticationToken)) {
       filterChain.doFilter(request, response);
+      return;
     }
     log.trace("OAuthUserDetailsCreateFilter start analyze");
     JwtAuthenticationToken jwtAuthenticationToken = (JwtAuthenticationToken) authentication;
