@@ -27,7 +27,7 @@ spring:
 
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8080/realms/oauth2-realm
+          issuer-uri: "${keycloak.base.URL}/realms/${keycloak.base.realm}"
 
       client:
         registration:
@@ -39,9 +39,12 @@ spring:
             scope: openid
         provider:
           keycloak:
-            token-uri: "http://localhost:8080/realms/oauth2-realm/protocol/openid-connect/token"
+            token-uri: "${keycloak.base.URL}/realms/${keycloak.base.realm}/protocol/openid-connect/token"
 
 keycloak:
+  base:
+    URL: "http://localhost:8080"
+    realm: "oauth2-realm"
   webclient:
     registrationId: "keycloak"
-    url: "http://localhost:8080/admin/realms/oauth2-realm"
+    url: "${keycloak.base.URL}/admin/realms/${keycloak.base.realm}"
