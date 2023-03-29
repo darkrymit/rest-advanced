@@ -1,7 +1,5 @@
 package com.epam.esm.persistance.entity;
 
-import com.epam.esm.persistance.dao.support.audit.AuditingEntityListener;
-import com.epam.esm.persistance.dao.support.audit.annotation.CreatedDate;
 import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
@@ -17,6 +15,8 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.Type;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Table(name = "users")

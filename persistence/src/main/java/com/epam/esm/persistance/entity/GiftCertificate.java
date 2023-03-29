@@ -1,8 +1,5 @@
 package com.epam.esm.persistance.entity;
 
-import com.epam.esm.persistance.dao.support.audit.AuditingEntityListener;
-import com.epam.esm.persistance.dao.support.audit.annotation.CreatedDate;
-import com.epam.esm.persistance.dao.support.audit.annotation.LastModifiedDate;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
@@ -23,6 +20,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 /**
  * Data class represents gift certificate entity.

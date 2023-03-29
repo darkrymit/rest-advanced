@@ -1,9 +1,9 @@
 package com.epam.esm.persistance.config;
 
-import com.epam.esm.persistance.dao.support.audit.AuditingProvider;
 import java.util.Optional;
+import org.springframework.data.domain.AuditorAware;
 
-public class StringAuditProvider implements AuditingProvider<String> {
+public class StringAuditProvider implements AuditorAware<String> {
 
   @Override
   public Optional<String> getCurrentAuditor() {
