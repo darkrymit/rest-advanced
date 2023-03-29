@@ -1,6 +1,7 @@
 package com.epam.esm.service.impl;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import com.epam.esm.persistance.dao.OrderRepository;
@@ -9,6 +10,7 @@ import com.epam.esm.persistance.entity.Order;
 import com.epam.esm.persistance.entity.OrderItem;
 import com.epam.esm.persistance.entity.Tag;
 import com.epam.esm.persistance.entity.User;
+import com.epam.esm.service.exceptions.NoSuchOrderException;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
@@ -59,5 +61,17 @@ class OrderServiceImplTest {
     when(orderRepository.findById(preparedOrder.getId())).thenReturn(Optional.of(preparedOrder));
 
     assertNotNull(orderService.getById(1L,uuid));
+  }
+
+  @Test
+  void getByIdShouldThrowNoSuchOrderExceptionWhenByNonExistingId() {
+
+    long id = 404L;
+
+    UUID uuid = UUID.fromString("028fcacb-b20b-4268-9e0c-6d96669b0d5e");
+
+    when(orderRepository.findById(id)).thenReturn(Optional.empty());
+
+    assertThrows(NoSuchOrderException.class, () -> orderService.getById(id,uuid));
   }
 }

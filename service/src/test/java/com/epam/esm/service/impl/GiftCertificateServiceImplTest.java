@@ -2,6 +2,7 @@ package com.epam.esm.service.impl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.AdditionalAnswers.answer;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
@@ -15,6 +16,7 @@ import com.epam.esm.persistance.dao.GiftCertificateRepository;
 import com.epam.esm.persistance.dao.TagRepository;
 import com.epam.esm.persistance.entity.GiftCertificate;
 import com.epam.esm.persistance.entity.Tag;
+import com.epam.esm.service.exceptions.NoSuchGiftCertificateException;
 import com.epam.esm.service.impl.handler.GiftCertificateUpdateHandler;
 import com.epam.esm.service.payload.request.GiftCertificateCreateRequest;
 import com.epam.esm.service.payload.request.GiftCertificatePriceUpdateRequest;
@@ -108,6 +110,16 @@ class GiftCertificateServiceImplTest {
 
     assertEquals(giftCertificate.getName(),
         giftCertificateService.getById(giftCertificate.getId()).getName());
+  }
+
+  @Test
+  void getByIdShouldThrowNoSuchGiftCertificateExceptionWhenByNonExistingId() {
+
+    long id = 404L;
+
+    when(giftCertificateRepository.findById(id)).thenReturn(Optional.empty());
+
+    assertThrows(NoSuchGiftCertificateException.class, () -> giftCertificateService.getById(id));
   }
 
   @Test

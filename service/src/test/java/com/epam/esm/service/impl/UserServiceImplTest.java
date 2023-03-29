@@ -2,12 +2,14 @@ package com.epam.esm.service.impl;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import com.epam.esm.persistance.dao.UserRepository;
 import com.epam.esm.persistance.entity.User;
 import com.epam.esm.service.UserOAuthDetails;
 import com.epam.esm.service.UserOAuthDetailsService;
+import com.epam.esm.service.exceptions.NoSuchUserException;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
@@ -75,6 +77,16 @@ class UserServiceImplTest {
     when(userOAuthDetailsService.getById(preparedUser.getId())).thenReturn(details);
 
     assertNotNull(userService.getById(uuid));
+  }
+
+  @Test
+  void getByIdShouldThrowNoSuchUserExceptionWhenByNonExistingId() {
+
+    UUID uuid = UUID.fromString("028fcacb-b20b-4268-9e0c-6d96669b0d5e");
+
+    when(userRepository.findById(uuid)).thenReturn(Optional.empty());
+
+    assertThrows(NoSuchUserException.class, () -> userService.getById(uuid));
   }
 
 }

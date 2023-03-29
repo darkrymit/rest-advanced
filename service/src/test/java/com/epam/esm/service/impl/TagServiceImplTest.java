@@ -3,6 +3,7 @@ package com.epam.esm.service.impl;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.AdditionalAnswers.answer;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.doNothing;
@@ -12,6 +13,7 @@ import static org.mockito.Mockito.when;
 
 import com.epam.esm.persistance.dao.TagRepository;
 import com.epam.esm.persistance.entity.Tag;
+import com.epam.esm.service.exceptions.NoSuchTagException;
 import com.epam.esm.service.payload.request.TagCreateRequest;
 import java.util.List;
 import java.util.Optional;
@@ -65,6 +67,16 @@ class TagServiceImplTest {
     when(tagRepository.findById(preparedTag.getId())).thenReturn(Optional.of(preparedTag));
 
     assertNotNull(tagService.getById(1L));
+  }
+
+  @Test
+  void getByIdShouldThrowNoSuchTagExceptionWhenByNonExistingId() {
+
+    long id = 404L;
+
+    when(tagRepository.findById(id)).thenReturn(Optional.empty());
+
+    assertThrows(NoSuchTagException.class, () -> tagService.getById(id));
   }
 
   @Test
