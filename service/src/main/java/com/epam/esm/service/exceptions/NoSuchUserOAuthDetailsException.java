@@ -12,21 +12,7 @@ public class NoSuchUserOAuthDetailsException extends RuntimeException {
   private final UUID id;
 
   public NoSuchUserOAuthDetailsException(UUID id) {
-    this.id = id;
-  }
-
-  public NoSuchUserOAuthDetailsException(String s, Throwable cause, UUID id) {
-    super(s, cause);
-    this.id = id;
-  }
-
-  public NoSuchUserOAuthDetailsException(Throwable cause, UUID id) {
-    super(cause);
-    this.id = id;
-  }
-
-  public NoSuchUserOAuthDetailsException(String s, UUID id) {
-    super(s);
+    super(String.format("No such UserOAuthDetails by id:%s", id));
     this.id = id;
   }
 

@@ -10,21 +10,7 @@ public class NoSuchOrderException extends RuntimeException {
   private final Long id;
 
   public NoSuchOrderException(Long id) {
-    this.id = id;
-  }
-
-  public NoSuchOrderException(String s, Throwable cause, Long id) {
-    super(s, cause);
-    this.id = id;
-  }
-
-  public NoSuchOrderException(Throwable cause, Long id) {
-    super(cause);
-    this.id = id;
-  }
-
-  public NoSuchOrderException(String s, Long id) {
-    super(s);
+    super(String.format("No such Order by id:%s", id));
     this.id = id;
   }
 

@@ -10,21 +10,7 @@ public class NoSuchTagException extends RuntimeException {
   private final Long id;
 
   public NoSuchTagException(Long id) {
-    this.id = id;
-  }
-
-  public NoSuchTagException(String s, Throwable cause, Long id) {
-    super(s, cause);
-    this.id = id;
-  }
-
-  public NoSuchTagException(Throwable cause, Long id) {
-    super(cause);
-    this.id = id;
-  }
-
-  public NoSuchTagException(String s, Long id) {
-    super(s);
+    super(String.format("No such Tag by id:%s", id));
     this.id = id;
   }
 

@@ -12,21 +12,7 @@ public class NoSuchUserException extends RuntimeException {
   private final UUID id;
 
   public NoSuchUserException(UUID id) {
-    this.id = id;
-  }
-
-  public NoSuchUserException(String s, Throwable cause, UUID id) {
-    super(s, cause);
-    this.id = id;
-  }
-
-  public NoSuchUserException(Throwable cause, UUID id) {
-    super(cause);
-    this.id = id;
-  }
-
-  public NoSuchUserException(String s, UUID id) {
-    super(s);
+    super(String.format("No such User by id:%s", id));
     this.id = id;
   }
 
