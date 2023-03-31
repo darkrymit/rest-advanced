@@ -11,9 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
-import org.springframework.stereotype.Component;
 
-@Component
 @RequiredArgsConstructor
 public class OrderModelAssembler implements RepresentationModelAssembler<Order, OrderDTO> {
 
