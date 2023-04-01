@@ -27,7 +27,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Collections;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -40,12 +39,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import security.ControllerIntegrationTestConfig;
 import security.WithCustomJwtToken;
 
-@ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = TagController.class)
 @ContextConfiguration(classes = {ControllerIntegrationTestConfig.class, TagController.class,
     TagControllerAdvice.class})
@@ -62,7 +59,7 @@ class TagControllerTest {
 
   @Test
   @WithCustomJwtToken
-  void testAllTagsShouldReturnPageWhenEntriesExists() throws Exception {
+  void allTagsShouldReturnPageWhenEntriesExists() throws Exception {
 
     Pageable pageable = PageRequest.of(0, 10);
     Page<Tag> tags = new PageImpl<>(Collections.singletonList(new Tag("tag")));
@@ -71,7 +68,8 @@ class TagControllerTest {
 
     mockMvc.perform(get("/tags").contentType(MediaType.APPLICATION_JSON_VALUE)
             .queryParam("page", String.valueOf(pageable.getPageNumber()))
-            .queryParam("size", String.valueOf(pageable.getPageSize()))).andExpect(status().isOk())
+            .queryParam("size", String.valueOf(pageable.getPageSize())))
+        .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(jsonPath("$._embedded.tags", hasSize(1)));
 
@@ -80,7 +78,7 @@ class TagControllerTest {
 
   @Test
   @WithCustomJwtToken
-  void testTagByIdShouldReturnTagWhenByExistingId() throws Exception {
+  void tagByIdShouldReturnTagWhenByExistingId() throws Exception {
     Tag tag = new Tag("tag");
 
     when(tagService.getById(1L)).thenReturn(tag);
@@ -95,7 +93,7 @@ class TagControllerTest {
 
   @Test
   @WithCustomJwtToken
-  void testTagByIdShouldReturnNotFoundWhenByNonExistingId() throws Exception {
+  void tagByIdShouldReturnNotFoundWhenByNonExistingId() throws Exception {
 
     when(tagService.getById(1L)).thenThrow(new NoSuchTagException(1L));
 
@@ -107,7 +105,7 @@ class TagControllerTest {
 
   @Test
   @WithCustomJwtToken
-  void testTagByIdShouldReturnInternalErrorWhenUnknownException() throws Exception {
+  void tagByIdShouldReturnInternalErrorWhenUnknownException() throws Exception {
 
     when(tagService.getById(1L)).thenThrow(new RuntimeException());
 
@@ -119,7 +117,7 @@ class TagControllerTest {
 
   @Test
   @WithCustomJwtToken
-  void testTagByIdShouldReturnInternalErrorWhenDataAccessException() throws Exception {
+  void tagByIdShouldReturnInternalErrorWhenDataAccessException() throws Exception {
 
     when(tagService.getById(1L)).thenThrow(getDataAccessException());
 
@@ -131,7 +129,7 @@ class TagControllerTest {
 
   @Test
   @WithCustomJwtToken
-  void testCreateTagShouldCreateTagWhenTagRequestValid() throws Exception {
+  void createTagShouldCreateTagWhenRequestValid() throws Exception {
 
     String name = "test";
     TagCreateRequest request = new TagCreateRequest(name);
@@ -150,7 +148,7 @@ class TagControllerTest {
 
   @Test
   @WithCustomJwtToken
-  void testCreateTagShouldReturnBadRequestWhenRequestNotValid() throws Exception {
+  void createTagShouldReturnBadRequestWhenRequestNotValid() throws Exception {
     String name = "tt";
     TagCreateRequest request = new TagCreateRequest(name);
 
@@ -164,7 +162,7 @@ class TagControllerTest {
 
   @Test
   @WithCustomJwtToken
-  void testDeleteTagShouldDeleteTagWhenByExistingId() throws Exception {
+  void deleteTagShouldDeleteTagWhenByExistingId() throws Exception {
     mockMvc.perform(delete("/tags/1").contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isNoContent());
 
@@ -174,7 +172,7 @@ class TagControllerTest {
 
   @Test
   @WithCustomJwtToken
-  void testDeleteTagShouldReturnForbiddenWhenNoAuthorization() throws Exception {
+  void deleteTagShouldReturnForbiddenWhenNoAccess() throws Exception {
     doThrow(new AccessDeniedException("test access denied")).when(tagService).deleteById(1L);
 
     mockMvc.perform(delete("/tags/1").contentType(MediaType.APPLICATION_JSON_VALUE))
