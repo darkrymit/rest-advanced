@@ -71,7 +71,7 @@ class OrderControllerTest {
 
   @Test
   @WithCustomJwtToken
-  void createOrder() throws Exception {
+  void createOrderShouldCreateOrderWhenRequestValid() throws Exception {
     UUID uuid = UUID.fromString("e80113ae-bfc8-4673-befd-732197da81cd");
     User owner = getUser(uuid);
     Order order = getOrder(owner);
@@ -93,7 +93,7 @@ class OrderControllerTest {
 
   @Test
   @WithCustomJwtToken
-  void orderById() throws Exception {
+  void orderByIdShouldReturnOrderWhenByExistingId() throws Exception {
     UUID uuid = UUID.fromString("e80113ae-bfc8-4673-befd-732197da81cd");
     User owner = getUser(uuid);
     Order order = getOrder(owner);
