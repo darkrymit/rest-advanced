@@ -7,11 +7,16 @@ services:
     ports:
       - "8081:8081"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/mydb?createDatabaseIfNotExist=true&useUnicode=true&serverTimezone=UTC
-      - KEYCLOAK_BASE_URL=http://host.docker.internal:8080
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql_db:3306/mydb?createDatabaseIfNotExist=true&useUnicode=true&serverTimezone=UTC&autoReconnect=true
+      - KEYCLOAK_BASE_URL=http://keycloak:8080
+      - LOGGING_LEVEL_ROOT=debug
     depends_on:
-      - mysql
-  mysql:
+      mysql_db:
+        condition: service_healthy
+      keycloak:
+        condition: service_started
+
+  mysql_db:
     image: mysql
     ports:
       - "3306:3306"
@@ -19,3 +24,23 @@ services:
       MYSQL_ROOT_PASSWORD: "!Password404!"
     volumes:
       - .database/data:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: mysqladmin ping -h localhost -u root --password=$$MYSQL_ROOT_PASSWORD
+      start_period: 5s
+      interval: 5s
+      timeout: 5s
+      retries: 55
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:20.0.5
+    ports:
+      - "8080:8080"
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    command:
+      - start-dev
+      - --import-realm
+      - --hostname-url=http://keycloak:8080
+    volumes:
+      - .keycloak/oauth2-realm.json:/opt/keycloak/data/import/realm.json
