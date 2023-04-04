@@ -18,7 +18,7 @@
       <groupId>com.epam.esm</groupId>
       <artifactId>web</artifactId>
       <version>1.0-SNAPSHOT</version>
-      <type>war</type>
+      <type>jar</type>
     </dependency>
     <dependency>
       <groupId>com.epam.esm</groupId>
