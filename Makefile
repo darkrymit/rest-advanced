@@ -24,5 +24,8 @@ buildImageUseDocker:
 	$(MVN) clean package spring-boot:repackage -DskipTests
 	docker build .
 
-startImage:
+startAll:
 	docker compose up
+
+stopAll:
+	docker compose down
