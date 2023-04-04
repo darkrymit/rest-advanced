@@ -7,6 +7,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import com.epam.esm.persistance.dao.UserRepository;
+import com.epam.esm.web.config.security.JwtTokenConfig;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -20,7 +21,7 @@ import security.JwtTestConfig;
 import security.WithCustomJwtToken;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {JwtTestConfig.class})
+@ContextConfiguration(classes = {JwtTestConfig.class, JwtTokenConfig.class})
 class OAuthUserDetailsCreateFilterTest {
 
   @Mock
