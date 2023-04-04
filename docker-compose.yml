@@ -1,0 +1,12 @@
+version: '3.9'
+
+services:
+  java_app:
+    container_name: web_app
+    image: darkrymit/web:1.0.0
+    build: .
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://host.docker.internal:3306/mydb?createDatabaseIfNotExist=true&useUnicode=true&serverTimezone=UTC
+      - KEYCLOAK_BASE_URL=http://host.docker.internal:8080
