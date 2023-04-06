@@ -93,6 +93,18 @@ class OrderControllerTest {
 
   @Test
   @WithCustomJwtToken
+  void createOrderShouldReturnBadRequestWhenRequestInvalid() throws Exception {
+    OrderCreateRequest request = new OrderCreateRequest(null);
+    // @formatter:off
+    mockMvc.perform(post("/orders")
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .content(asJson(request)))
+        .andExpect(status().isBadRequest());
+    // @formatter:on
+  }
+
+  @Test
+  @WithCustomJwtToken
   void orderByIdShouldReturnOrderWhenByExistingId() throws Exception {
     UUID uuid = UUID.fromString("e80113ae-bfc8-4673-befd-732197da81cd");
     User owner = getUser(uuid);
