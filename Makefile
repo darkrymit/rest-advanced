@@ -22,7 +22,7 @@ buildImage:
 	$(call buildImageUseSpringPackageAndDockerFile)
 
 buildImageUsePlugin:
-	$(call buildImageUseSpringPlugin)
+	$(call buildImageUseSpringBuildImage)
 
 buildImageUseDocker:
 	$(call buildImageUseSpringPackageAndDockerFile)
