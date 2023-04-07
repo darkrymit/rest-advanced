@@ -5,7 +5,7 @@ MVN := mvnw
 
 #Be aware its not a function its variable defined by multiline
 define buildImageUseSpringPlugin
-	$(MVN) clean spring-boot:build-image
+	$(MVN) -pl "!:coverage" clean compile spring-boot:build-image -DskipTests
 endef
 
 default:
@@ -21,8 +21,8 @@ buildImageUsePlugin:
 	$(call buildImageUseSpringPlugin)
 
 buildImageUseDocker:
-	$(MVN) clean package spring-boot:repackage -DskipTests
-	docker build .
+	$(MVN) -pl "!:coverage" clean package spring-boot:repackage -DskipTests
+	docker  build -t spring-rest-advanced .
 
 startAll:
 	docker compose up
