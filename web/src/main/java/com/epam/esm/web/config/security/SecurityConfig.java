@@ -15,6 +15,9 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -24,11 +27,13 @@ public class SecurityConfig {
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http,
-      Converter<Jwt, AbstractAuthenticationToken> converter, JwtDecoder decoder)
+      Converter<Jwt, AbstractAuthenticationToken> converter, JwtDecoder decoder,
+      CorsConfigurationSource corsConfigurationSource)
       throws Exception {
     // @formatter:off
     return http
         .csrf(AbstractHttpConfigurer::disable)
+        .cors(cors -> cors.configurationSource(corsConfigurationSource))
         .authorizeRequests()
         .mvcMatchers(HttpMethod.GET,"/certificates/*","/certificates")
         .permitAll()
@@ -41,5 +46,13 @@ public class SecurityConfig {
         )
         .build();
     // @formatter:on
+  }
+
+  @Bean
+  CorsConfigurationSource corsConfigurationSource() {
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    CorsConfiguration cors = new CorsConfiguration().applyPermitDefaultValues();
+    source.registerCorsConfiguration("/**", cors);
+    return source;
   }
 }
